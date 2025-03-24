@@ -1,1 +1,96 @@
-<p>create-set works!</p>
+<main class="main create-set-page">
+  <h1 class="create-set__h1">Create a new flashcard set</h1>
+  <form class="create-set-form" name="createSet">
+    <div>
+      <label class="title-field">
+        <input
+          type="text"
+          placeholder="Enter a title"
+          class="title-input"
+          name="title"
+          required
+        />
+      </label>
+    </div>
+    <div>
+      <label class="description-field">
+        <input
+          type="text"
+          name="description"
+          class="description-input"
+          placeholder="Enter a discription"
+        />
+      </label>
+    </div>
+    <div class="tools-container row">
+      <button type="button" id="import-btn" class="import-btn row">
+        <img class="import-btn__icon" src="plus.png" alt="Import button icon" />
+        <span class="import-btn__name">Import</span>
+      </button>
+      <button type="button" class="swap-btn row">
+        <img class="swap-btn__icon" src="swap.png" alt="swap button icon" />
+      </button>
+    </div>
+
+    <fieldset class="creating-cards">
+      <ul class="creating-cards__list">
+        <!-- <li data-creating-card-num="${cardNum}" class="creating-card">
+            <div class="creating-card__head row">
+              <span class="creating-card__num">${cardNum}</span>
+              <button type="button" class="delete-button">
+                <img src="/immages/bin.png" alt="delete icon" />
+              </button>
+            </div>
+
+            <fieldset class="term-definition row">
+              <label class="term-field">
+                <input
+                  type="text"
+                  class="term"
+                  placeholder="Enter term"
+                  name="text"
+                />
+              </label>
+
+              <label class="definition-field">
+                <input
+                  type="text"
+                  class="definition"
+                  name="definition"
+                  placeholder="Enter definition"
+                />
+              </label>
+            </fieldset>
+          </li> -->
+      </ul>
+    </fieldset>
+
+    <div class="add-creating-card">
+      <button type="button" class="add-creating-card__btn">ADD A CARD</button>
+    </div>
+
+    <div class="create-set">
+      <button type="submit" class="create-set__btn">Create</button>
+    </div>
+  </form>
+</main>
+
+<div class="import-modal">
+  <div class="import-modal__content">
+    <h1>Import your data</h1>
+    <label class="import-textarea-label">
+      <textarea
+        class="import-textarea"
+        name="import-textarea"
+        rows="10"
+        id=""
+        placeholder="Word 1   Definition 1&#10;Word 2   Definition 2&#10;Word 3   Definition 3"
+      ></textarea>
+    </label>
+  </div>
+
+  <div class="buttons-container row">
+    <button class="cancel-import">Cancel Import</button>
+    <button class="import">Import</button>
+  </div>
+</div>

@@ -1,9 +1,10 @@
 <main class="main create-set-page">
   <h1 class="create-set__h1">Create a new flashcard set</h1>
-  <form class="create-set-form" name="createSet">
+  <form (ngSubmit)="onSubmit()" class="create-set-form" name="createSet">
     <div>
       <label class="title-field">
         <input
+          [(ngModel)]="title"
           type="text"
           placeholder="Enter a title"
           class="title-input"
@@ -15,6 +16,7 @@
     <div>
       <label class="description-field">
         <input
+          [(ngModel)]="description"
           type="text"
           name="description"
           class="description-input"
@@ -27,20 +29,33 @@
         <img class="import-btn__icon" src="plus.png" alt="Import button icon" />
         <span class="import-btn__name">Import</span>
       </button>
-      <button type="button" class="swap-btn row">
+      <button (click)="onSwap()" type="button" class="swap-btn row">
         <img class="swap-btn__icon" src="swap.png" alt="swap button icon" />
       </button>
     </div>
 
     <fieldset class="creating-cards">
       <ul class="creating-cards__list">
-        <li appCreatingCard></li>
-        <li appCreatingCard></li>
+        @for (creatingCard of creatingCards; track creatingCard.id; let
+        i=$index) {
+        <li
+          appCreatingCard
+          [creatingCard]="creatingCard"
+          [cardNum]="i"
+          (delete)="onDelete($event)"
+        ></li>
+        }
       </ul>
     </fieldset>
 
     <div class="add-creating-card">
-      <button type="button" class="add-creating-card__btn">ADD A CARD</button>
+      <button
+        type="button"
+        class="add-creating-card__btn"
+        (click)="onAddCard()"
+      >
+        ADD A CARD
+      </button>
     </div>
 
     <div class="create-set">

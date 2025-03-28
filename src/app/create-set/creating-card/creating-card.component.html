@@ -1,18 +1,25 @@
 <!-- <li data-creating-card-num="${cardNum - 1}" class="creating-card"> -->
 <div class="creating-card__head row">
-  <span class="creating-card__num"></span>
-  <button type="button" class="delete-button">
+  <span class="creating-card__num"> {{ cardNum + 1 }}</span>
+  <button type="button" class="delete-button" (click)="onDeleteCreatingCard()">
     <img src="bin.png" alt="delete icon" />
   </button>
 </div>
 
 <fieldset class="term-definition row">
   <label class="term-field">
-    <input type="text" class="term" placeholder="Enter term" name="text" />
+    <input
+      [(ngModel)]="creatingCard.term"
+      type="text"
+      class="term"
+      placeholder="Enter term"
+      name="text"
+    />
   </label>
 
   <label class="definition-field">
     <input
+      [(ngModel)]="creatingCard.definition"
       type="text"
       class="definition"
       name="definition"

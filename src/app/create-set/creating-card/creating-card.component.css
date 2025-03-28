@@ -2,10 +2,6 @@ input {
   font-weight: 550;
 }
 
-:host + :host {
-  margin-top: 1rem;
-}
-
 :host {
   background-color: #ced5e3;
   padding: 1rem;
@@ -72,30 +68,4 @@ input {
 
 .hiding {
   opacity: 0;
-}
-
-.add-creating-card {
-  height: 5rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  margin-top: 1rem;
-}
-
-.add-creating-card__btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #2e3856;
-  font-weight: 700;
-  border-bottom: 5px solid #3ccfcf;
-  padding-bottom: 1rem;
-  letter-spacing: 2px;
-}
-
-.add-creating-card__btn:hover {
-  color: #ffcd1f;
-  border-color: #ffcd1f;
 }

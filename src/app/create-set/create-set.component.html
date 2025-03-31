@@ -1,3 +1,7 @@
+@if (isImporting) {
+<app-import-modal (close)="onCloseImport()" />
+}
+
 <main class="main create-set-page">
   <h1 class="create-set__h1">Create a new flashcard set</h1>
   <form (ngSubmit)="onSubmit()" class="create-set-form" name="createSet">
@@ -25,7 +29,12 @@
       </label>
     </div>
     <div class="tools-container row">
-      <button type="button" id="import-btn" class="import-btn row">
+      <button
+        (click)="onImport()"
+        type="button"
+        id="import-btn"
+        class="import-btn row"
+      >
         <img class="import-btn__icon" src="plus.png" alt="Import button icon" />
         <span class="import-btn__name">Import</span>
       </button>
@@ -63,23 +72,3 @@
     </div>
   </form>
 </main>
-
-<div class="import-modal">
-  <div class="import-modal__content">
-    <h1>Import your data</h1>
-    <label class="import-textarea-label">
-      <textarea
-        class="import-textarea"
-        name="import-textarea"
-        rows="10"
-        id=""
-        placeholder="Word 1   Definition 1&#10;Word 2   Definition 2&#10;Word 3   Definition 3"
-      ></textarea>
-    </label>
-  </div>
-
-  <div class="buttons-container row">
-    <button class="cancel-import">Cancel Import</button>
-    <button class="import">Import</button>
-  </div>
-</div>

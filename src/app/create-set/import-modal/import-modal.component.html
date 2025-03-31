@@ -1,0 +1,19 @@
+<div class="import-modal" (click)="onCancel()">
+  <div class="import-modal__content">
+    <h1>Import your data</h1>
+    <label class="import-textarea-label">
+      <textarea
+        class="import-textarea"
+        name="import-textarea"
+        rows="10"
+        id=""
+        placeholder="Word 1   Definition 1&#10;Word 2   Definition 2&#10;Word 3   Definition 3"
+      ></textarea>
+    </label>
+  </div>
+
+  <div class="buttons-container row">
+    <button class="cancel-import" (click)="onCancel()">Cancel Import</button>
+    <button class="import">Import</button>
+  </div>
+</div>

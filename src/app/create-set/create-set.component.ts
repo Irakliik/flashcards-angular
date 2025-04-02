@@ -52,7 +52,9 @@ export class CreateSetComponent {
   }
 
   onSubmit() {
-    console.log(this.creatingCards);
+    const filteredCreatingCards = this.creatingCards.filter(
+      (creatingCard) => creatingCard.definition && creatingCard.term
+    );
   }
 
   onSwap() {

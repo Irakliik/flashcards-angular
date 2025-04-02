@@ -8,6 +8,7 @@ import { Component, output } from '@angular/core';
   styleUrl: './import-modal.component.css',
 })
 export class ImportModalComponent {
+  isFocused = false;
   close = output<void>();
 
   onCancel() {

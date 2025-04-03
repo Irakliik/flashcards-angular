@@ -57,7 +57,7 @@ h1 {
   gap: 15px;
 }
 
-.import-btn {
+/* .import-btn {
   padding: 0.5rem;
   border-radius: 10px;
   border: 2px solid #d9dde8;
@@ -67,15 +67,15 @@ h1 {
   background: none;
   cursor: pointer;
   margin-bottom: 2rem;
-}
+} */
 
-.import-btn__icon {
+/* .import-btn__icon {
   width: 18px;
   display: block;
   margin-right: 8px;
-}
+} */
 
-.swap-btn {
+/* .swap-btn {
   padding: 0.5rem;
   border-radius: 10px;
   border: 2px solid #d9dde8;
@@ -85,12 +85,12 @@ h1 {
   background: none;
   cursor: pointer;
   margin-bottom: 2rem;
-}
+} */
 
-.swap-btn__icon {
+/* .swap-btn__icon {
   width: 18px;
   display: block;
-}
+} */
 
 .creating-card + .creating-card {
   margin-top: 1rem;

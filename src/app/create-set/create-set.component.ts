@@ -3,11 +3,17 @@ import { CreatingCardComponent } from './creating-card/creating-card.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { ImportModalComponent } from './import-modal/import-modal.component';
+import { ButtonComponent } from '../shared/button/button.component';
 
 @Component({
   selector: 'app-create-set',
   standalone: true,
-  imports: [CreatingCardComponent, FormsModule, ImportModalComponent],
+  imports: [
+    CreatingCardComponent,
+    FormsModule,
+    ImportModalComponent,
+    ButtonComponent,
+  ],
   templateUrl: './create-set.component.html',
   styleUrl: './create-set.component.css',
 })

@@ -4,7 +4,7 @@
 
 <main class="main create-set-page">
   <h1 class="create-set__h1">Create a new flashcard set</h1>
-  <form (ngSubmit)="onSubmit()" class="create-set-form" name="createSet">
+  <form (ngSubmit)="onSubmit()" class="create-set-form" name="createSet" #form>
     <div>
       <label class="title-field">
         <input
@@ -60,12 +60,11 @@
 
     <fieldset class="creating-cards">
       <ul class="creating-cards__list">
-        @for (creatingCard of creatingCards; track creatingCard.id; let
-        i=$index) {
+        @for (creatingCard of creatingCards; track creatingCard.id;) {
         <li
           appCreatingCard
           [creatingCard]="creatingCard"
-          [cardNum]="i"
+          [cardNum]="$index"
           (delete)="onDelete($event)"
         ></li>
         }

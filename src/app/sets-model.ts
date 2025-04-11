@@ -1,0 +1,31 @@
+export type Sets = {
+  title: string;
+  description: string;
+  setId: string;
+  cards: {
+    term: string;
+    definition: string;
+    id: string;
+  }[];
+}[];
+
+export type NewSet = {
+  title: string;
+  description: string;
+  cards: {
+    term: string;
+    definition: string;
+    id: string;
+  }[];
+};
+
+export type CardSet = {
+  title: string;
+  description: string;
+  setId: string;
+  cards: {
+    term: string;
+    definition: string;
+    id: string;
+  }[];
+};

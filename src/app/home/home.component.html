@@ -3,6 +3,12 @@
     <h1>Flashcard sets</h1>
 
     <ul class="sets-menu__list">
+      @for (set of sets; track set.setId) {
+      <li class="sets-menu__item">
+        <app-sets-menu-item [cardSet]="set" />
+      </li>
+      }
+
       <!-- <li class="flashcard-set">
           <figure>
             <img

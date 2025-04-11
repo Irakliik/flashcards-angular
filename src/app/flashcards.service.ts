@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { type NewSet, type Sets } from './sets-model';
 
 @Injectable({ providedIn: 'root' })
 export class FlashcardsService {
@@ -11,16 +12,7 @@ export class FlashcardsService {
     }
   }
 
-  sets: {
-    title: string;
-    description: string;
-    setId: string;
-    cards: {
-      term: string;
-      definition: string;
-      id: string;
-    }[];
-  }[] = [
+  sets: Sets = [
     {
       title: 'italian-english',
       description: 'animals',
@@ -45,15 +37,7 @@ export class FlashcardsService {
     },
   ];
 
-  addSet(newSet: {
-    title: string;
-    description: string;
-    cards: {
-      term: string;
-      definition: string;
-      id: string;
-    }[];
-  }) {
+  addSet(newSet: NewSet) {
     this.sets.unshift({ ...newSet, setId: new Date().getTime().toString() });
     this.saveSets();
     console.log(this.sets);

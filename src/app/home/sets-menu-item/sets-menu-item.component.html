@@ -1,1 +1,18 @@
-<p>sets-menu-item works!</p>
+<div class="container">
+  <a href="#" class="row">
+    <figure>
+      <img
+        src="/flash-cards.png"
+        class="sets-menu__item__img"
+        alt="Flashcards Icon"
+      />
+    </figure>
+    <div>
+      <h4 class="sets-menu__item__h4">{{ cardSet().title }}</h4>
+      <p>Flashcard set - {{ cardSet().cards.length }} terms</p>
+    </div>
+    <button type="button" class="delete-button sets-menu__item__del-btn">
+      <img src="/bin.png" alt="delete-icon" />
+    </button>
+  </a>
+</div>

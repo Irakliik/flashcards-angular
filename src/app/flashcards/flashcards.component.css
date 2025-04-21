@@ -95,7 +95,6 @@
   margin: 0;
 }
 
-.flashcards-swap-btn__icon,
 .flashcards-swap-btn__icon {
   width: 18px;
   display: block;
@@ -103,6 +102,7 @@
 
 :is(.flashcards-shuffle-btn, .flashcards-swap-btn):hover {
   background-color: hsla(0, 0%, 50%, 0.093);
+  background-color: red;
 }
 
 .word-container {

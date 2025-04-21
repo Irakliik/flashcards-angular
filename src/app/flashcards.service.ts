@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { type NewSet, type Sets } from './sets-model';
 
@@ -8,11 +8,11 @@ export class FlashcardsService {
     const sets = localStorage.getItem('sets');
 
     if (sets) {
-      this.sets = JSON.parse(sets);
+      this.sets.set(JSON.parse(sets));
     }
   }
 
-  sets: Sets = [
+  private sets = signal<Sets>([
     {
       title: 'italian-english',
       description: 'animals',
@@ -35,15 +35,24 @@ export class FlashcardsService {
         },
       ],
     },
-  ];
+  ]);
+
+  allSets = this.sets.asReadonly();
 
   addSet(newSet: NewSet) {
-    this.sets.unshift({ ...newSet, setId: new Date().getTime().toString() });
+    this.sets.update((oldSet) => [
+      ...oldSet,
+      { ...newSet, setId: new Date().getTime().toString() },
+    ]);
     this.saveSets();
-    console.log(this.sets);
+  }
+
+  deleteSet(id: string) {
+    this.sets.update((oldSets) => oldSets.filter((set) => set.setId !== id));
+    this.saveSets();
   }
 
   private saveSets() {
-    localStorage.setItem('sets', JSON.stringify(this.sets));
+    localStorage.setItem('sets', JSON.stringify(this.sets()));
   }
 }

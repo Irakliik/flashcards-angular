@@ -35,6 +35,6 @@
   border-radius: 10px;
 }
 
-:is(.tool-btn, .create-set__btn, .tool-btn):hover {
+:is(.tool-btn, .create-set__btn, .tool-btn, .flashcards-swap-btn):hover {
   background-color: hsla(0, 0%, 50%, 0.093);
 }

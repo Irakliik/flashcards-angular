@@ -71,11 +71,11 @@ export class CreateSetComponent {
       (creatingCard) => creatingCard.definition && creatingCard.term
     );
 
-    console.log({
-      title: this.title,
-      description: this.description,
-      filteredCreatingCards,
-    });
+    // console.log({
+    //   title: this.title,
+    //   description: this.description,
+    //   filteredCreatingCards,
+    // });
 
     this.flashcardsService.addSet({
       title: this.title,

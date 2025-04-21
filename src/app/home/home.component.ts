@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit, Signal, signal } from '@angular/core';
 import { HeaderComponent } from '../shared/header/header.component';
 import { FlashcardsService } from '../flashcards.service';
 import { Sets } from '../sets-model';
@@ -11,14 +11,12 @@ import { SetsMenuItemComponent } from './sets-menu-item/sets-menu-item.component
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent implements OnInit {
-  constructor(private flashcardsService: FlashcardsService) {
-    console.log(flashcardsService);
-  }
+export class HomeComponent {
+  flashcardsService = inject(FlashcardsService);
 
-  sets!: Sets;
+  sets = this.flashcardsService.allSets;
 
-  ngOnInit(): void {
-    this.sets = this.flashcardsService.sets;
+  onDelete(id: string) {
+    this.flashcardsService.deleteSet(id);
   }
 }

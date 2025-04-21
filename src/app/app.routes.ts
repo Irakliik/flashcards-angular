@@ -14,7 +14,7 @@ export const routes: Routes = [
   },
 
   {
-    path: 'flashcards',
+    path: 'flashcards/:id',
     component: FlashcardsComponent,
   },
 ];

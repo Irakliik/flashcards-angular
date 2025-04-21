@@ -1,8 +1,8 @@
 <main class="flashcards-main">
-  <h1 class="flashcards-main__h1">Flashcards</h1>
+  <h1 class="flashcards-main__h1">{{ selectedSet.title }}</h1>
 
   <div class="flashcards-stuff-container">
-    <div class="flashcards-stuff row">
+    <div class="flashcards-stuff row" (click)="turnCard()">
       <div class="flashcards-stuff__tools row">
         <button class="hint-btn row">
           <img src="bulb.png" class="hint-btn__icon" alt="hint icon" />
@@ -13,7 +13,9 @@
         </button>
       </div>
       <div class="word-container">
-        <p class="termOrDefinition">word</p>
+        <p class="termOrDefinition" [class.transformedToDefinition]="!term">
+          {{ term ? selectedCard.term : selectedCard.definition }}
+        </p>
       </div>
 
       <div class="below-tools row">
@@ -28,7 +30,12 @@
               alt="shuffle button icon"
             />
           </button> -->
-        <button type="button" class="flashcards-swap-btn row">
+        <button
+          (click)="onSwapBtn($event)"
+          appButton
+          type="button"
+          class="flashcards-swap-btn row"
+        >
           <img
             class="flashcards-swap-btn__icon"
             src="swap.png"
@@ -39,17 +46,17 @@
     </div>
 
     <div class="arrows">
-      <button class="left-arrow-btn">
+      <button class="left-arrow-btn" (click)="onPreviousCard()">
         <img
           src="left-arrow.png"
           class="left-arrow__icon"
           alt="left arrow icon"
         />
       </button>
-      <span class="flashcard-number">12</span>
+      <span class="flashcard-number"> {{ selectedCardNum + 1 }} </span>
       /
-      <span class="flashcard-number-from">20</span>
-      <button class="right-arrow-btn">
+      <span class="flashcard-number-from">{{ totalCardsNum }}</span>
+      <button class="right-arrow-btn" (click)="onNextCard()">
         <img
           src="right-arrow.png"
           class="right-arrow__icon"
@@ -58,7 +65,12 @@
       </button>
     </div>
     <div class="flashcards-progress-container">
-      <progress class="flashcards-progress" max="5" value="1"></progress>
+      <progress
+        #progress
+        class="flashcards-progress"
+        [max]="totalCardsNum"
+        [value]="selectedCardNum + 1"
+      ></progress>
     </div>
   </div>
 </main>

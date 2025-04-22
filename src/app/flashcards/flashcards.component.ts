@@ -75,11 +75,8 @@ export class FlashcardsComponent implements OnInit {
     this.selectedSet.cards.forEach((card) => {
       [card.term, card.definition] = [card.definition, card.term];
     });
+    this.term = true;
 
     console.log(this.selectedCard);
   }
-
-
-
-  
 }

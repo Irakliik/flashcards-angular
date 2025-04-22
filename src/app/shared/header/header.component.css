@@ -52,6 +52,16 @@ figure {
   background-color: #4255ff;
 }
 
+@media (max-width: 850px) {
+  .row {
+    display: block;
+  }
+
+  nav {
+    width: 100%;
+  }
+}
+
 /* MENU BUTTON */
 
 .menu-button {

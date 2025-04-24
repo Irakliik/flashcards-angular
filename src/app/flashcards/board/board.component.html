@@ -1,0 +1,49 @@
+@if (isEditing) {
+<app-edit-card
+  [selectedCard]="selectedCard()"
+  (closeModal)="onCloseModal()"
+></app-edit-card>
+}
+
+<div class="flashcards-stuff row" (click)="turnCard()">
+  <div class="flashcards-stuff__tools row">
+    <button class="hint-btn row">
+      <img src="bulb.png" class="hint-btn__icon" alt="hint icon" />
+      <span class="hint-text">Get a hint</span>
+    </button>
+    <button class="edit-btn row" (click)="onEditCard($event)">
+      <img src="edit.png" class="edit-btn__icon" alt="edit icon" />
+    </button>
+  </div>
+  <div class="word-container">
+    <p class="termOrDefinition" [class.transformedToDefinition]="!term()">
+      {{ term() ? selectedCard().term : selectedCard().definition }}
+    </p>
+  </div>
+
+  <div class="below-tools row">
+    <!-- <button
+          type="button"
+          id="shuffle-btn"
+          class="flashcards-shuffle-btn row"
+        >
+          <img
+            class="flashcards-shuffle-btn__icon"
+            src="/immages/shuffle.png"
+            alt="shuffle button icon"
+          />
+        </button> -->
+    <button
+      (click)="onSwapBtn($event)"
+      appButton
+      type="button"
+      class="flashcards-swap-btn row"
+    >
+      <img
+        class="flashcards-swap-btn__icon"
+        src="swap.png"
+        alt="swap button icon"
+      />
+    </button>
+  </div>
+</div>

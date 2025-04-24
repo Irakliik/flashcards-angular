@@ -20,3 +20,9 @@ export type CardSet = {
     id: string;
   }[];
 };
+
+export type Card = {
+  term: string;
+  definition: string;
+  id: string;
+};

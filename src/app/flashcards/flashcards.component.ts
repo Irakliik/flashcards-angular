@@ -12,11 +12,12 @@ import { FlashcardsService } from '../flashcards.service';
 import { CardSet } from '../sets-model';
 import { ActivatedRoute } from '@angular/router';
 import { ButtonComponent } from '../shared/button/button.component';
+import { BoardComponent } from './board/board.component';
 
 @Component({
   selector: 'app-flashcards',
   standalone: true,
-  imports: [ButtonComponent],
+  imports: [BoardComponent],
   templateUrl: './flashcards.component.html',
   styleUrl: './flashcards.component.css',
 })
@@ -66,12 +67,7 @@ export class FlashcardsComponent implements OnInit {
     }
   }
 
-  turnCard() {
-    this.term = !this.term;
-  }
-
-  onSwapBtn(e: Event) {
-    e.stopPropagation();
+  onSwapBtn() {
     this.selectedSet.cards.forEach((card) => {
       [card.term, card.definition] = [card.definition, card.term];
     });

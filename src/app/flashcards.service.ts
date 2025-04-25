@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { type NewSet, type Sets } from './sets-model';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class FlashcardsService {
@@ -39,6 +40,12 @@ export class FlashcardsService {
 
   allSets = this.sets.asReadonly();
 
+  updateCard$ = new Subject<{
+    newTerm: string;
+    newDefinition: string;
+    cardId: string;
+  }>();
+
   addSet(newSet: NewSet) {
     this.sets.update((oldSet) => [
       ...oldSet,
@@ -50,6 +57,28 @@ export class FlashcardsService {
   deleteSet(id: string) {
     this.sets.update((oldSets) => oldSets.filter((set) => set.setId !== id));
     this.saveSets();
+  }
+
+  updateCard(
+    setId: string,
+    cardId: string,
+    newTerm: string,
+    newDefinition: string
+  ) {
+    this.sets.update((oldSet) =>
+      oldSet.map((set) =>
+        set.setId === setId
+          ? set
+          : {
+              ...set,
+              cards: set.cards.map((card) =>
+                card.id === cardId
+                  ? { ...card, term: newTerm, definition: newDefinition }
+                  : card
+              ),
+            }
+      )
+    );
   }
 
   private saveSets() {

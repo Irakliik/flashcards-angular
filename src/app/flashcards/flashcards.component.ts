@@ -25,14 +25,16 @@ export class FlashcardsComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute) {}
   flashcardsService = inject(FlashcardsService);
 
-  progress = viewChild<ElementRef<HTMLProgressElement>>('progress');
   selectedSet!: CardSet;
-
-  selectedCard!: {
+  selectedCard = signal<{
     term: string;
     definition: string;
     id: string;
-  };
+  }>({
+    term: '',
+    definition: '',
+    id: '',
+  });
 
   totalCardsNum!: number;
   selectedCardNum: number = 0;
@@ -45,15 +47,24 @@ export class FlashcardsComponent implements OnInit {
         .allSets()
         .find((set) => set.setId === params['id'])!;
     });
-    this.selectedCard = this.selectedSet.cards[0];
+    this.selectedCard.set(this.selectedSet.cards[0]);
     this.totalCardsNum = this.selectedSet.cards.length;
+
+    this.flashcardsService.updateCard$.subscribe((newCard) => {
+      this.flashcardsService.updateCard(
+        this.selectedCard().id,
+        newCard.cardId,
+        newCard.newTerm,
+        newCard.newDefinition
+      );
+    });
   }
 
   onPreviousCard() {
     if (0 < this.selectedCardNum) {
       this.selectedCardNum--;
       // console.log(this.selectedCardNum);
-      this.selectedCard = this.selectedSet.cards[this.selectedCardNum];
+      this.selectedCard.set(this.selectedSet.cards[this.selectedCardNum]);
       this.term = true;
     }
   }
@@ -61,7 +72,7 @@ export class FlashcardsComponent implements OnInit {
   onNextCard() {
     if (this.selectedCardNum < this.totalCardsNum - 1) {
       this.selectedCardNum++;
-      this.selectedCard = this.selectedSet.cards[this.selectedCardNum];
+      this.selectedCard.set(this.selectedSet.cards[this.selectedCardNum]);
       console.log(this.selectedCardNum, this.totalCardsNum);
       this.term = true;
     }

@@ -1,6 +1,6 @@
 @if (isEditing) {
 <app-edit-card
-  [selectedCard]="selectedCard()"
+  [(selectedCard)]="selectedCard"
   (closeModal)="onCloseModal()"
 ></app-edit-card>
 }

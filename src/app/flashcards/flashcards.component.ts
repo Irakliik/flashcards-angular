@@ -1,18 +1,10 @@
-import {
-  Component,
-  computed,
-  ElementRef,
-  inject,
-  OnInit,
-  signal,
-  viewChild,
-  ViewChild,
-} from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FlashcardsService } from '../flashcards.service';
 import { CardSet } from '../sets-model';
 import { ActivatedRoute } from '@angular/router';
 import { ButtonComponent } from '../shared/button/button.component';
 import { BoardComponent } from './board/board.component';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-flashcards',
@@ -36,6 +28,8 @@ export class FlashcardsComponent implements OnInit {
     id: '',
   });
 
+  selectedCard$ = toObservable(this.selectedCard);
+
   totalCardsNum!: number;
   selectedCardNum: number = 0;
 
@@ -50,13 +44,23 @@ export class FlashcardsComponent implements OnInit {
     this.selectedCard.set(this.selectedSet.cards[0]);
     this.totalCardsNum = this.selectedSet.cards.length;
 
-    this.flashcardsService.updateCard$.subscribe((newCard) => {
-      this.flashcardsService.updateCard(
-        this.selectedCard().id,
-        newCard.cardId,
-        newCard.newTerm,
-        newCard.newDefinition
-      );
+    this.flashcardsService.updateCard$.subscribe({
+      next: (newCard) => {
+        this.selectedSet = {
+          ...this.selectedSet,
+          cards: this.selectedSet.cards.map((oldCard) =>
+            oldCard.id === newCard.cardId
+              ? {
+                  ...oldCard,
+                  term: newCard.newTerm,
+                  definition: newCard.newDefinition,
+                }
+              : oldCard
+          ),
+        };
+
+        this.flashcardsService.updateCard(this.selectedSet);
+      },
     });
   }
 

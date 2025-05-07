@@ -4,18 +4,17 @@
       <img src="close-button.png" class="close-btn__img" alt="close button" />
     </button>
     <h2>Edit</h2>
-    <form (submit)="onSubmit(newTerm.value, newDefinition.value, $event)">
+    <form #form="ngForm" (submit)="onSubmit($event)">
       <label>
         <input
           placeholder="Edit Term"
-          [value]="selectedCard().term"
           name="newTerm"
           (focus)="termFocused = true"
           (blur)="termFocused = false"
           [style.borderBottom]="
             termFocused ? '4px solid #FFCD1F' : '2px solid black'
           "
-          #newTerm
+          ngModel
           type="text"
           class="edit_input edit__term"
         />
@@ -23,14 +22,13 @@
       <label>
         <input
           name="newDefinition"
-          [value]="selectedCard().definition"
           placeholder="Edit Definition"
           (focus)="definitionFocused = true"
           (blur)="definitionFocused = false"
           [style.borderBottom]="
             definitionFocused ? '4px solid #FFCD1F' : '2px solid black'
           "
-          #newDefinition
+          ngModel
           type="text"
           class="edit_input edit__definition"
         />

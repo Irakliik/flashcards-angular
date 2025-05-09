@@ -87,7 +87,5 @@ export class FlashcardsComponent implements OnInit {
       [card.term, card.definition] = [card.definition, card.term];
     });
     this.term = true;
-
-    console.log(this.selectedCard);
   }
 }

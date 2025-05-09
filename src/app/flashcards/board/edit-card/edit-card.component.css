@@ -21,6 +21,7 @@
   align-items: start;
   padding: 2rem;
   position: relative;
+  border: none;
 }
 
 form {

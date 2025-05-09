@@ -2,10 +2,8 @@ import {
   afterNextRender,
   Component,
   inject,
-  input,
   model,
   output,
-  signal,
   viewChild,
 } from '@angular/core';
 import { Card } from '../../../sets-model';

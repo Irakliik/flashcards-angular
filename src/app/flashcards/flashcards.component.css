@@ -24,34 +24,6 @@
   padding-bottom: 1px;
 }
 
-/* Below Tools */
-/* ///////////// */
-/* ////////////////////////////////// */
-/* ////////////////////////////////// */
-
-.below-tools {
-  position: absolute;
-  bottom: -50px;
-  right: 20px;
-}
-
-.below-tools :is(.flashcards-shuffle-btn, .flashcards-swap-btn) {
-  padding: 0.5rem;
-  border-radius: 10px;
-  border: 2px solid hsl(224, 25%, 88%);
-  font-size: 14px;
-  font-weight: 650;
-  color: #586380;
-  background: none;
-  cursor: pointer;
-  margin: 0;
-}
-
-:is(.flashcards-shuffle-btn):hover {
-  background-color: hsla(0, 0%, 50%, 0.093);
-  background-color: red;
-}
-
 /* /////////////////////// */
 /* FLASH CARDS PROGRESS */
 /* /////////////////////// */

@@ -14,7 +14,14 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   cursor: pointer;
   position: relative;
+  transition: all 0.5s ease;
+  transform: rotateX(0deg);
+  /* backface-visibility: hidden; */
 }
+
+/* .flashcards-stuff:hover {
+  transform: rotateX(180deg);
+} */
 
 .flashcards-stuff button {
   background: none;
@@ -79,9 +86,13 @@
   display: block;
 }
 
-:is(.flashcards-shuffle-btn, .flashcards-swap-btn):hover {
+/* :is(.flashcards-shuffle-btn, .flashcards-swap-btn):hover {
   background-color: hsla(0, 0%, 50%, 0.093);
   background-color: red;
+} */
+
+.below-tools .flashcards-swap-btn:hover {
+  background-color: hsla(0, 0%, 50%, 0.093);
 }
 
 .word-container {

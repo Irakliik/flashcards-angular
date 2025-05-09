@@ -33,8 +33,6 @@ export class AppComponent implements AfterViewInit {
     this.routerSub = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
-        console.log('URL changed to:', event.url);
-
         if (event.url === '/') {
           this.viewContainerRef.createEmbeddedView(this.searchTpl);
         } else {

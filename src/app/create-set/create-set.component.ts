@@ -1,17 +1,24 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { CreatingCardComponent } from './creating-card/creating-card.component';
-import { FormsModule } from '@angular/forms';
+import {
+  FormArray,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ImportModalComponent } from './import-modal/import-modal.component';
 import { ButtonComponent } from '../shared/button/button.component';
 import { FlashcardsService } from '../flashcards.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Card } from '../sets-model';
 
 @Component({
   selector: 'app-create-set',
   standalone: true,
   imports: [
     CreatingCardComponent,
-    FormsModule,
+    ReactiveFormsModule,
     ImportModalComponent,
     ButtonComponent,
   ],
@@ -19,78 +26,86 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './create-set.component.css',
 })
 export class CreateSetComponent {
-  title!: string;
-  description!: string;
-
   isImporting = false;
-
-  @ViewChild('form') form!: ElementRef<HTMLFormElement>;
 
   constructor(
     private flashcardsService: FlashcardsService,
-    private route: ActivatedRoute,
     private router: Router
   ) {}
 
-  creatingCards: {
-    id: string;
-    term: string;
-    definition: string;
-  }[] = [
-    {
-      id: 'c1',
-      term: '',
-      definition: '',
-    },
-    {
-      id: 'c2',
-      term: '',
-      definition: '',
-    },
-    {
-      id: 'c3',
-      term: '',
-      definition: '',
-    },
-  ];
+  form = new FormGroup({
+    title: new FormControl('', {
+      validators: [Validators.required],
+    }),
+    description: new FormControl(''),
+
+    creatingCards: new FormArray([
+      new FormGroup({
+        term: new FormControl(''),
+        definition: new FormControl(''),
+        id: new FormControl('c1'),
+      }),
+      new FormGroup({
+        term: new FormControl(''),
+        definition: new FormControl(''),
+        id: new FormControl('c2'),
+      }),
+      new FormGroup({
+        term: new FormControl(''),
+        definition: new FormControl(''),
+        id: new FormControl('c3'),
+      }),
+    ]),
+  });
+
+  get creatingCards() {
+    return this.form.controls.creatingCards.controls;
+  }
 
   onDelete(id: string) {
-    this.creatingCards = this.creatingCards.filter((el) => el.id !== id);
+    const index = this.form.controls.creatingCards.value.findIndex(
+      (el) => el.id === id
+    );
+
+    (this.form.get('creatingCards') as FormArray).removeAt(index);
   }
 
   onAddCard() {
-    this.creatingCards.push({
-      id: new Date().getTime().toString(),
-      term: '',
-      definition: '',
-    });
+    this.form.controls.creatingCards.push(
+      new FormGroup({
+        term: new FormControl(''),
+        definition: new FormControl(''),
+        id: new FormControl(new Date().getTime().toString()),
+      })
+    );
   }
 
   onSubmit() {
-    const filteredCreatingCards = this.creatingCards.filter(
+    const cardsValue = this.form.get('creatingCards')!.value as Card[];
+    const title = this.form.get('title')!.value as string;
+    const description = this.form.get('description')!.value as string;
+
+    const cards = cardsValue.filter(
       (creatingCard) => creatingCard.definition && creatingCard.term
     );
 
-    // console.log({
-    //   title: this.title,
-    //   description: this.description,
-    //   filteredCreatingCards,
-    // });
-
     this.flashcardsService.addSet({
-      title: this.title,
-      description: this.description,
-      cards: filteredCreatingCards,
+      title: title,
+      description: description,
+      cards: cards,
     });
-
-    this.form.nativeElement.reset();
-
     this.router.navigate(['']);
   }
 
   onSwap() {
-    this.creatingCards.forEach((el) => {
-      [el.term, el.definition] = [el.definition, el.term];
+    (this.form.get('creatingCards') as FormArray).controls.forEach((el) => {
+      const term = el.get('term')!.value;
+      const definition = el.get('definition')!.value;
+
+      el.patchValue({
+        term: definition,
+        definition: term,
+      });
     });
   }
 

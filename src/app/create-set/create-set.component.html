@@ -4,27 +4,31 @@
 
 <main class="main create-set-page">
   <h1 class="create-set__h1">Create a new flashcard set</h1>
-  <form (ngSubmit)="onSubmit()" class="create-set-form" name="createSet" #form>
+  <form
+    (ngSubmit)="onSubmit()"
+    class="create-set-form"
+    name="createSet"
+    [formGroup]="form"
+  >
     <div>
       <label class="title-field">
         <input
-          [(ngModel)]="title"
           type="text"
           placeholder="Enter a title"
           class="title-input"
           name="title"
-          required
+          formControlName="title"
         />
       </label>
     </div>
     <div>
       <label class="description-field">
         <input
-          [(ngModel)]="description"
           type="text"
           name="description"
           class="description-input"
           placeholder="Enter a discription"
+          formControlName="description"
         />
       </label>
     </div>
@@ -60,7 +64,7 @@
 
     <fieldset class="creating-cards">
       <ul class="creating-cards__list">
-        @for (creatingCard of creatingCards; track creatingCard.id;) {
+        @for (creatingCard of creatingCards; track creatingCard.value.id) {
         <li
           appCreatingCard
           [creatingCard]="creatingCard"

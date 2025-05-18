@@ -1,5 +1,7 @@
+<router-outlet />
+
 <main class="flashcards-main">
-  <h1 class="flashcards-main__h1">{{ selectedSet.title }}</h1>
+  <h1 class="flashcards-main__h1">{{ selectedSet()!.title }}</h1>
 
   <div class="flashcards-stuff-container">
     <app-board

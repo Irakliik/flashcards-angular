@@ -4,17 +4,17 @@
     <img src="close-button.png" class="close-btn__img" alt="close button" />
   </button>
   <h2>Edit</h2>
-  <form #form="ngForm" (submit)="onSubmit($event)">
+  <form [formGroup]="form" (submit)="onSubmit($event)">
     <label>
       <input
         placeholder="Edit Term"
         name="newTerm"
+        formControlName="newTerm"
         (focus)="termFocused = true"
         (blur)="termFocused = false"
         [style.borderBottom]="
           termFocused ? '4px solid #FFCD1F' : '2px solid black'
         "
-        ngModel
         type="text"
         class="edit_input edit__term"
       />
@@ -23,12 +23,12 @@
       <input
         name="newDefinition"
         placeholder="Edit Definition"
+        formControlName="newDefinition"
         (focus)="definitionFocused = true"
         (blur)="definitionFocused = false"
         [style.borderBottom]="
           definitionFocused ? '4px solid #FFCD1F' : '2px solid black'
         "
-        ngModel
         type="text"
         class="edit_input edit__definition"
       />

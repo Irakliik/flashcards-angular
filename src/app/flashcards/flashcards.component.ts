@@ -1,34 +1,40 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { FlashcardsService } from '../flashcards.service';
-import { CardSet } from '../sets-model';
-import { ActivatedRoute } from '@angular/router';
+import { Card, CardSet } from '../sets-model';
+import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { ButtonComponent } from '../shared/button/button.component';
 import { BoardComponent } from './board/board.component';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { EditCardComponent } from './board/edit-card/edit-card.component';
 
 @Component({
   selector: 'app-flashcards',
   standalone: true,
-  imports: [BoardComponent],
+  imports: [BoardComponent, RouterOutlet],
   templateUrl: './flashcards.component.html',
   styleUrl: './flashcards.component.css',
 })
 export class FlashcardsComponent implements OnInit {
-  constructor(private activatedRoute: ActivatedRoute) {}
+  setId = input.required<string>();
+
   flashcardsService = inject(FlashcardsService);
 
-  selectedSet!: CardSet;
-  selectedCard = signal<{
-    term: string;
-    definition: string;
-    id: string;
-  }>({
+  selectedSet = computed(() =>
+    this.flashcardsService.allSets().find((set) => set.setId === this.setId())
+  );
+  selectedCard = signal({
     term: '',
     definition: '',
     id: '',
   });
-
-  selectedCard$ = toObservable(this.selectedCard);
 
   totalCardsNum!: number;
   selectedCardNum: number = 0;
@@ -36,30 +42,13 @@ export class FlashcardsComponent implements OnInit {
   term = true;
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params) => {
-      this.selectedSet = this.flashcardsService
-        .allSets()
-        .find((set) => set.setId === params['id'])!;
-    });
-    this.selectedCard.set(this.selectedSet.cards[0]);
-    this.totalCardsNum = this.selectedSet.cards.length;
+    this.selectedCard.set(this.selectedSet()!.cards[0]);
+    this.totalCardsNum = this.selectedSet()!.cards.length;
 
     this.flashcardsService.updateCard$.subscribe({
       next: (newCard) => {
-        this.selectedSet = {
-          ...this.selectedSet,
-          cards: this.selectedSet.cards.map((oldCard) =>
-            oldCard.id === newCard.cardId
-              ? {
-                  ...oldCard,
-                  term: newCard.newTerm,
-                  definition: newCard.newDefinition,
-                }
-              : oldCard
-          ),
-        };
-
-        this.flashcardsService.updateCard(this.selectedSet);
+        this.flashcardsService.replaceCard(newCard, this.selectedSet()!.setId);
+        this.selectedCard.set(this.selectedSet()!.cards[this.selectedCardNum]);
       },
     });
   }
@@ -67,8 +56,7 @@ export class FlashcardsComponent implements OnInit {
   onPreviousCard() {
     if (0 < this.selectedCardNum) {
       this.selectedCardNum--;
-      // console.log(this.selectedCardNum);
-      this.selectedCard.set(this.selectedSet.cards[this.selectedCardNum]);
+      this.selectedCard.set(this.selectedSet()!.cards[this.selectedCardNum]);
       this.term = true;
     }
   }
@@ -76,14 +64,13 @@ export class FlashcardsComponent implements OnInit {
   onNextCard() {
     if (this.selectedCardNum < this.totalCardsNum - 1) {
       this.selectedCardNum++;
-      this.selectedCard.set(this.selectedSet.cards[this.selectedCardNum]);
-      console.log(this.selectedCardNum, this.totalCardsNum);
+      this.selectedCard.set(this.selectedSet()!.cards[this.selectedCardNum]);
       this.term = true;
     }
   }
 
   onSwapBtn() {
-    this.selectedSet.cards.forEach((card) => {
+    this.selectedSet()!.cards.forEach((card) => {
       [card.term, card.definition] = [card.definition, card.term];
     });
     this.term = true;

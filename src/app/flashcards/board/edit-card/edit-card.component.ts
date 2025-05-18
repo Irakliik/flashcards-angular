@@ -1,60 +1,63 @@
 import {
-  afterNextRender,
   Component,
+  computed,
   inject,
+  input,
   model,
+  OnInit,
   output,
-  viewChild,
 } from '@angular/core';
 import { Card } from '../../../sets-model';
 import { FlashcardsService } from '../../../flashcards.service';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-card',
   standalone: true,
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './edit-card.component.html',
   styleUrl: './edit-card.component.css',
 })
-export class EditCardComponent {
-  private form = viewChild.required<NgForm>('form');
+export class EditCardComponent implements OnInit {
   private flashcardsService = inject(FlashcardsService);
-  selectedCard = model.required<Card>();
   closeModal = output();
   termFocused = false;
   definitionFocused = false;
+  activatedRoute = inject(ActivatedRoute);
+  router = inject(Router);
+  setId = input.required<string>();
+  cardId = input.required<string>();
+  card = computed<Card>(
+    () => this.flashcardsService.getCard(this.setId(), this.cardId())!
+  )!;
 
-  constructor() {
-    afterNextRender(() => {
-      setTimeout(() => {
-        this.form().setValue({
-          newTerm: this.selectedCard().term,
-          newDefinition: this.selectedCard().definition,
-        });
-      }, 1);
+  form = new FormGroup({
+    newTerm: new FormControl(''),
+    newDefinition: new FormControl(''),
+  });
+
+  ngOnInit(): void {
+    this.form.setValue({
+      newTerm: this.card().term,
+      newDefinition: this.card().definition,
     });
   }
 
   onCloseBtn() {
-    this.closeModal.emit();
+    this.router.navigate(['../..'], { relativeTo: this.activatedRoute });
   }
 
   onSubmit(e: Event) {
-    // e.preventDefault();
     e.preventDefault();
 
-    const newTerm = this.form().form.value.newTerm;
-    const newDefinition = this.form().form.value.newDefinition;
-
-    this.selectedCard.update((oldCard) => {
-      return { ...oldCard, term: newTerm, definition: newDefinition };
-    });
+    const newTerm = this.form.value.newTerm!;
+    const newDefinition = this.form.value.newDefinition!;
 
     this.flashcardsService.updateCard$.next({
-      newTerm,
-      newDefinition,
-      cardId: this.selectedCard().id,
+      term: newTerm,
+      definition: newDefinition,
+      id: this.card().id,
     });
 
     this.onCloseBtn();

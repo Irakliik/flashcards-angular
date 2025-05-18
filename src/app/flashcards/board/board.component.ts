@@ -4,6 +4,7 @@ import {
   inject,
   input,
   model,
+  output,
   Output,
 } from '@angular/core';
 import { Card } from '../../sets-model';
@@ -13,23 +14,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [EditCardComponent],
+  imports: [],
   templateUrl: './board.component.html',
   styleUrl: './board.component.css',
 })
 export class BoardComponent {
-  isEditing = false;
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
   selectedCard = model.required<Card>();
-
-  term = model.required<boolean>();
+  swap = output();
+  isTerm = model.required<boolean>();
 
   turnCard() {
-    this.term.update((term) => !term);
+    this.isTerm.update((isTerm) => !isTerm);
   }
-
-  @Output() swap = new EventEmitter();
 
   onSwapBtn(e: Event) {
     e.stopPropagation();
@@ -38,14 +36,8 @@ export class BoardComponent {
 
   onEditCard(e: Event) {
     e.stopPropagation();
-    // this.isEditing = true;
     this.router.navigate(['./edit', this.selectedCard().id], {
       relativeTo: this.activatedRoute,
     });
-  }
-
-  onCloseModal() {
-    console.log(123);
-    // this.isEditing = false;
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CreatingCardComponent } from './creating-card/creating-card.component';
 import {
   FormArray,
@@ -10,7 +10,7 @@ import {
 import { ImportModalComponent } from './import-modal/import-modal.component';
 import { ButtonComponent } from '../shared/button/button.component';
 import { FlashcardsService } from '../flashcards.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { Card } from '../sets-model';
 
 @Component({
@@ -21,17 +21,15 @@ import { Card } from '../sets-model';
     ReactiveFormsModule,
     ImportModalComponent,
     ButtonComponent,
+    RouterOutlet,
   ],
   templateUrl: './create-set.component.html',
   styleUrl: './create-set.component.css',
 })
 export class CreateSetComponent {
-  isImporting = false;
-
-  constructor(
-    private flashcardsService: FlashcardsService,
-    private router: Router
-  ) {}
+  flashcardsService = inject(FlashcardsService);
+  router = inject(Router);
+  activatedRoute = inject(ActivatedRoute);
 
   form = new FormGroup({
     title: new FormControl('', {
@@ -110,9 +108,6 @@ export class CreateSetComponent {
   }
 
   onImport() {
-    this.isImporting = true;
-  }
-  onCloseImport() {
-    this.isImporting = false;
+    this.router.navigate(['import'], { relativeTo: this.activatedRoute });
   }
 }

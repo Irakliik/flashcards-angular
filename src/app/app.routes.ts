@@ -3,6 +3,7 @@ import { CreateSetComponent } from './create-set/create-set.component';
 import { HomeComponent } from './home/home.component';
 import { FlashcardsComponent } from './flashcards/flashcards.component';
 import { EditCardComponent } from './flashcards/board/edit-card/edit-card.component';
+import { ImportModalComponent } from './create-set/import-modal/import-modal.component';
 
 export const routes: Routes = [
   {
@@ -12,6 +13,7 @@ export const routes: Routes = [
   {
     path: 'create-set',
     component: CreateSetComponent,
+    children: [{ path: 'import', component: ImportModalComponent }],
   },
 
   {

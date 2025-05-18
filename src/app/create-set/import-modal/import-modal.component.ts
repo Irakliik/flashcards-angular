@@ -1,4 +1,5 @@
-import { Component, output } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-import-modal',
@@ -9,9 +10,10 @@ import { Component, output } from '@angular/core';
 })
 export class ImportModalComponent {
   isFocused = false;
-  close = output<void>();
+  router = inject(Router);
+  activatedRoute = inject(ActivatedRoute);
 
   onCancel() {
-    this.close.emit();
+    this.router.navigate(['..'], { relativeTo: this.activatedRoute });
   }
 }

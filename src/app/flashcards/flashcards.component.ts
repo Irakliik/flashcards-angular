@@ -39,7 +39,7 @@ export class FlashcardsComponent implements OnInit {
   totalCardsNum!: number;
   selectedCardNum: number = 0;
 
-  term = true;
+  isTerm = true;
 
   ngOnInit(): void {
     this.selectedCard.set(this.selectedSet()!.cards[0]);
@@ -57,7 +57,7 @@ export class FlashcardsComponent implements OnInit {
     if (0 < this.selectedCardNum) {
       this.selectedCardNum--;
       this.selectedCard.set(this.selectedSet()!.cards[this.selectedCardNum]);
-      this.term = true;
+      this.isTerm = true;
     }
   }
 
@@ -65,7 +65,7 @@ export class FlashcardsComponent implements OnInit {
     if (this.selectedCardNum < this.totalCardsNum - 1) {
       this.selectedCardNum++;
       this.selectedCard.set(this.selectedSet()!.cards[this.selectedCardNum]);
-      this.term = true;
+      this.isTerm = true;
     }
   }
 
@@ -73,6 +73,6 @@ export class FlashcardsComponent implements OnInit {
     this.selectedSet()!.cards.forEach((card) => {
       [card.term, card.definition] = [card.definition, card.term];
     });
-    this.term = true;
+    this.isTerm = true;
   }
 }

@@ -9,8 +9,8 @@
     </button>
   </div>
   <div class="word-container">
-    <p class="termOrDefinition" [class.transformedToDefinition]="!term()">
-      {{ term() ? selectedCard().term : selectedCard().definition }}
+    <p class="termOrDefinition" [class.transformedToDefinition]="!isTerm()">
+      {{ isTerm() ? selectedCard().term : selectedCard().definition }}
     </p>
   </div>
 

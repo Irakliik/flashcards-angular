@@ -4,31 +4,42 @@
   <h1 class="flashcards-main__h1">{{ selectedSet()!.title }}</h1>
 
   <div class="flashcards-stuff-container">
-    <app-board
-      [(selectedCard)]="selectedCard"
-      [(isTerm)]="isTerm"
-      (swap)="onSwapBtn()"
-    ></app-board>
+    <app-board [(selectedCard)]="selectedCard" [(isTerm)]="isTerm"></app-board>
 
-    <div class="arrows">
-      <button class="left-arrow-btn" (click)="onPreviousCard()">
+    <div class="tools-below">
+      <div class="arrows">
+        <button class="left-arrow-btn" (click)="onPreviousCard()">
+          <img
+            src="left-arrow.png"
+            class="left-arrow__icon"
+            alt="left arrow icon"
+          />
+        </button>
+        <span class="flashcard-number"> {{ selectedCardNum + 1 }} </span>
+        /
+        <span class="flashcard-number-from">{{ totalCardsNum }}</span>
+        <button class="right-arrow-btn" (click)="onNextCard()">
+          <img
+            src="right-arrow.png"
+            class="right-arrow__icon"
+            alt="right arrow icon"
+          />
+        </button>
+      </div>
+      <button
+        (click)="(2 + 2)"
+        appButton
+        type="button"
+        class="flashcards-swap-btn row"
+      >
         <img
-          src="left-arrow.png"
-          class="left-arrow__icon"
-          alt="left arrow icon"
-        />
-      </button>
-      <span class="flashcard-number"> {{ selectedCardNum + 1 }} </span>
-      /
-      <span class="flashcard-number-from">{{ totalCardsNum }}</span>
-      <button class="right-arrow-btn" (click)="onNextCard()">
-        <img
-          src="right-arrow.png"
-          class="right-arrow__icon"
-          alt="right arrow icon"
+          class="flashcards-swap-btn__icon"
+          src="swap.png"
+          alt="swap button icon"
         />
       </button>
     </div>
+
     <div class="flashcards-progress-container">
       <progress
         #progress

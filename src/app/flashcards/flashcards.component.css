@@ -28,8 +28,17 @@
 /* FLASH CARDS PROGRESS */
 /* /////////////////////// */
 
-.arrows {
+.tools-below {
   margin-top: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.arrows {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -68,6 +77,31 @@
 
 .flashcards-progress {
   width: 100%;
+}
+
+.flashcards-swap-btn {
+  padding: 0.5rem;
+  border-radius: 10px;
+  border: 2px solid hsl(224, 25%, 88%);
+  font-size: 14px;
+  font-weight: 650;
+  color: #586380;
+  background: none;
+  cursor: pointer;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+}
+
+.flashcards-swap-btn__icon {
+  width: 18px;
+  display: block;
+}
+
+.flashcards-swap-btn:hover {
+  background-color: hsla(0, 0%, 50%, 0.093);
 }
 
 /* /////////////////////////////// */

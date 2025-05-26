@@ -19,7 +19,6 @@ import { Card } from '../sets-model';
   imports: [
     CreatingCardComponent,
     ReactiveFormsModule,
-    ImportModalComponent,
     ButtonComponent,
     RouterOutlet,
   ],

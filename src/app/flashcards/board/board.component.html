@@ -1,5 +1,17 @@
-<div class="flashcards-stuff row" (click)="turnCard()">
-  <div class="flashcards-stuff__tools row">
+<!-- <div
+  class="board row"
+  [style.rotate]="'x ' + deg() + 'deg'"
+  (click)="turnCard()"
+> -->
+
+<div class="board row" [class.rotate]="rotate" (click)="turnCard()">
+  <div
+    class="board__tools row"
+    [class]="{
+      'board__tools--invisible': toolsInvisible,
+      hidden: hidden
+    }"
+  >
     <button class="hint-btn row">
       <img src="bulb.png" class="hint-btn__icon" alt="hint icon" />
       <span class="hint-text">Get a hint</span>
@@ -9,22 +21,20 @@
     </button>
   </div>
   <div class="word-container">
-    <p class="termOrDefinition" [class.transformedToDefinition]="!isTerm()">
+    <!-- <p [style.rotate]="'x ' + deg + 'deg'" class="termOrDefinition">
       {{ isTerm() ? selectedCard().term : selectedCard().definition }}
-    </p>
-  </div>
+    </p> -->
 
-  <div class="below-tools row">
-    <!-- <button
-          type="button"
-          id="shuffle-btn"
-          class="flashcards-shuffle-btn row"
-        >
-          <img
-            class="flashcards-shuffle-btn__icon"
-            src="/immages/shuffle.png"
-            alt="shuffle button icon"
-          />
-        </button> -->
+    @if (front()) {
+    <p class="front text" [class.front-visible]="frontVisible">
+      {{ selectedCard().term }}
+    </p>
+    } @else {
+
+    <p class="back text" [class.back-visible]="backVisible">
+      {{ selectedCard().definition }}
+    </p>
+
+    }
   </div>
 </div>

@@ -4,7 +4,7 @@
   width: 100%;
 }
 
-.flashcards-stuff {
+.board {
   /* width: 60%; */
   margin: 0 auto;
   background-color: #fff;
@@ -15,22 +15,20 @@
   cursor: pointer;
   position: relative;
   transition: all 0.5s ease;
-  transform: rotateX(0deg);
-  /* backface-visibility: hidden; */
+  /* rotate: x 0deg; */
+  position: relative;
 }
 
-/* .flashcards-stuff:hover {
-  transform: rotateX(180deg);
-} */
-
-.flashcards-stuff button {
+.board button {
   background: none;
   border: none;
   cursor: pointer;
 }
 
-.flashcards-stuff__tools {
+.board__tools {
   gap: 100px;
+  position: absolute;
+  transition: all 0.4s ease;
 }
 
 .hint-btn__icon,
@@ -38,23 +36,23 @@
   width: 17px;
 }
 
-.flashcards-stuff__tools .hint-btn {
+.board__tools .hint-btn {
   padding: 8px 12px;
   gap: 10px;
   font-weight: 600;
   border-radius: 40px;
 }
 
-.flashcards-stuff__tools .edit-btn {
+.board__tools .edit-btn {
   padding: 8px;
   border-radius: 50%;
 }
 
-.flashcards-stuff__tools .hint-btn--clicked {
+.board__tools .hint-btn--clicked {
   background-color: #edeff4;
 }
 
-.flashcards-stuff__tools .edit-btn:hover {
+.board__tools .edit-btn:hover {
   background-color: rgba(128, 128, 128, 0.419);
 }
 
@@ -63,7 +61,7 @@
 /* ////////////////////////////////// */
 /* ////////////////////////////////// */
 
-.below-tools {
+/* .below-tools {
   position: absolute;
   bottom: -50px;
   right: 20px;
@@ -84,7 +82,7 @@
 .flashcards-swap-btn__icon {
   width: 18px;
   display: block;
-}
+} */
 
 /* :is(.flashcards-shuffle-btn, .flashcards-swap-btn):hover {
   background-color: hsla(0, 0%, 50%, 0.093);
@@ -106,12 +104,45 @@
   font-weight: 500;
 }
 
-.termOrDefinition {
+/* .termOrDefinition {
   padding: 2px 15px;
   border-radius: 20px;
-}
+} */
 
-.transformedToDefinition {
+/* .transformedToDefinition {
   background-color: rgb(77, 255, 0);
   transition: background-color 0.3s ease, width 0.3s ease;
+} */
+
+.rotate {
+  rotate: x 180deg;
+}
+
+.text {
+  transition: all 0.5s ease;
+}
+
+.back {
+  opacity: 0;
+  rotate: x 180deg;
+}
+
+.front {
+  opacity: 0;
+}
+
+.back-visible {
+  opacity: 1;
+}
+
+.front-visible {
+  opacity: 1;
+}
+
+.board__tools--invisible {
+  opacity: 0;
+}
+
+.hidden {
+  display: none;
 }

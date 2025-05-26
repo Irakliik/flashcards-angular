@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { ImportModalComponent } from './import-modal/import-modal.component';
 import { ButtonComponent } from '../shared/button/button.component';
-import { FlashcardsService } from '../flashcards.service';
+import { FlashcardsService } from '../flashcards/flashcards.service';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { Card } from '../sets-model';
 import { CreateSetService } from './create-set.service';

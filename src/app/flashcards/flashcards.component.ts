@@ -7,7 +7,7 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { FlashcardsService } from '../flashcards.service';
+import { FlashcardsService } from './flashcards.service';
 import { Card, CardSet } from '../sets-model';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { ButtonComponent } from '../shared/button/button.component';

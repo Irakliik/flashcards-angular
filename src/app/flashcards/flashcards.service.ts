@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Card, CardSet, type NewSet, type Sets } from './sets-model';
+import { Card, CardSet, type NewSet, type Sets } from '../sets-model';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })

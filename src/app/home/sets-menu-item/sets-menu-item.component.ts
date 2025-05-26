@@ -1,5 +1,5 @@
 import { Component, input, OnInit, output } from '@angular/core';
-import { FlashcardsService } from '../../flashcards.service';
+import { FlashcardsService } from '../../flashcards/flashcards.service';
 import { CardSet, Sets } from '../../sets-model';
 import { RouterLink } from '@angular/router';
 

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CreatingCardComponent } from './creating-card/creating-card.component';
 import {
   FormArray,
@@ -7,11 +7,11 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ImportModalComponent } from './import-modal/import-modal.component';
 import { ButtonComponent } from '../shared/button/button.component';
 import { FlashcardsService } from '../flashcards.service';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { Card } from '../sets-model';
+import { CreateSetService } from './create-set.service';
 
 @Component({
   selector: 'app-create-set',
@@ -25,10 +25,26 @@ import { Card } from '../sets-model';
   templateUrl: './create-set.component.html',
   styleUrl: './create-set.component.css',
 })
-export class CreateSetComponent {
+export class CreateSetComponent implements OnInit {
   flashcardsService = inject(FlashcardsService);
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
+  createSetService = inject(CreateSetService);
+
+  ngOnInit(): void {
+    this.createSetService.extractedCards$.subscribe((extractedCards) => {
+      for (let i = 0; i < extractedCards.length - 3; i++) {
+        this.addCardGroup();
+      }
+
+      this.form.controls.creatingCards.controls.forEach((formGroup, index) => {
+        formGroup.patchValue({
+          term: extractedCards[index].term,
+          definition: extractedCards[index].definition,
+        });
+      });
+    });
+  }
 
   form = new FormGroup({
     title: new FormControl('', {
@@ -68,6 +84,10 @@ export class CreateSetComponent {
   }
 
   onAddCard() {
+    this.addCardGroup();
+  }
+
+  addCardGroup() {
     this.form.controls.creatingCards.push(
       new FormGroup({
         term: new FormControl(''),

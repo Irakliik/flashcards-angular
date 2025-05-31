@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ButtonComponent } from '../shared/button/button.component';
-import { FlashcardsService } from '../flashcards.service';
+import { FlashcardsService } from '../flashcards/flashcards.service';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { Card } from '../sets-model';
 import { CreateSetService } from './create-set.service';

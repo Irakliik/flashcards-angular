@@ -7,7 +7,7 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { FlashcardsService } from '../flashcards.service';
+import { FlashcardsService } from './flashcards.service';
 import { Card, CardSet } from '../sets-model';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { ButtonComponent } from '../shared/button/button.component';
@@ -70,9 +70,13 @@ export class FlashcardsComponent implements OnInit {
   }
 
   onSwapBtn() {
-    this.selectedSet()!.cards.forEach((card) => {
-      [card.term, card.definition] = [card.definition, card.term];
-    });
+    // this.selectedSet()!.cards.forEach((card) => {
+    //   [card.term, card.definition] = [card.definition, card.term];
+    // });
+
+    this.flashcardsService.swapCards(this.selectedSet()!.setId);
+    console.log(this.selectedSet()?.cards);
+    this.selectedCard.set(this.selectedSet()!.cards[this.selectedCardNum]);
     this.isTerm = true;
   }
 }

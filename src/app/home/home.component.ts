@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, Signal, signal } from '@angular/core';
 import { HeaderComponent } from '../shared/header/header.component';
-import { FlashcardsService } from '../flashcards.service';
+import { FlashcardsService } from '../flashcards/flashcards.service';
 import { Sets } from '../sets-model';
 import { SetsMenuItemComponent } from './sets-menu-item/sets-menu-item.component';
 

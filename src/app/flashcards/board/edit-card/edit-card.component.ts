@@ -8,7 +8,7 @@ import {
   output,
 } from '@angular/core';
 import { Card } from '../../../sets-model';
-import { FlashcardsService } from '../../../flashcards.service';
+import { FlashcardsService } from '../../flashcards.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 

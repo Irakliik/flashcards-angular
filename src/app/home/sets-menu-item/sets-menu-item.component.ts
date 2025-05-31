@@ -1,5 +1,5 @@
 import { Component, input, OnInit, output } from '@angular/core';
-import { FlashcardsService } from '../../flashcards.service';
+import { FlashcardsService } from '../../flashcards/flashcards.service';
 import { CardSet, Sets } from '../../sets-model';
 import { RouterLink } from '@angular/router';
 
@@ -11,10 +11,6 @@ import { RouterLink } from '@angular/router';
   styleUrl: './sets-menu-item.component.css',
 })
 export class SetsMenuItemComponent {
-  constructor(private flashcardsService: FlashcardsService) {
-    // console.log(flashcardsService);
-  }
-
   delete = output<string>();
 
   cardSet = input.required<CardSet>();

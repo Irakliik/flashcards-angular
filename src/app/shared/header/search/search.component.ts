@@ -13,7 +13,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [SearchSuggestionComponent, FormsModule, RouterLink],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css',
 })
@@ -35,9 +35,5 @@ export class SearchComponent {
     setTimeout(() => {
       this.focused = false;
     }, 300);
-  }
-
-  onClick() {
-    console.log(123);
   }
 }

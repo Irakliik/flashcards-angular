@@ -11,10 +11,6 @@ import { RouterLink } from '@angular/router';
   styleUrl: './sets-menu-item.component.css',
 })
 export class SetsMenuItemComponent {
-  constructor(private flashcardsService: FlashcardsService) {
-    // console.log(flashcardsService);
-  }
-
   delete = output<string>();
 
   cardSet = input.required<CardSet>();

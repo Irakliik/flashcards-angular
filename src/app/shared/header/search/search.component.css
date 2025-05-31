@@ -32,7 +32,7 @@ button {
   border-radius: 8px;
   z-index: 999;
   padding: 10px;
-  display: none;
+  /* display: none; */
 }
 
 .searched-items {

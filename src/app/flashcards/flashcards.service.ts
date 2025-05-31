@@ -1,7 +1,6 @@
 import { Injectable, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Card, CardSet, type NewSet, type Sets } from '../sets-model';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Card, type NewSet, type Sets } from '../sets-model';
+import { Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class FlashcardsService {
@@ -83,5 +82,24 @@ export class FlashcardsService {
 
   private saveSets() {
     localStorage.setItem('sets', JSON.stringify(this.sets()));
+  }
+
+  swapCards(setId: string) {
+    this.sets.update((oldSets) =>
+      oldSets.map((oldSet) =>
+        oldSet.setId !== setId
+          ? oldSet
+          : {
+              ...oldSet,
+              cards: oldSet.cards.map((oldCard) => ({
+                ...oldCard,
+                term: oldCard.definition,
+                definition: oldCard.term,
+              })),
+            }
+      )
+    );
+
+    this.saveSets();
   }
 }

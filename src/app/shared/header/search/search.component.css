@@ -52,22 +52,3 @@ button {
 .searched-item + .searched-item {
   margin-top: 10px;
 }
-
-.searched-item a {
-  justify-content: left;
-  text-decoration: none;
-  color: black;
-}
-
-.dash {
-  margin: 0 5px;
-}
-.searched-item p {
-  font-weight: 400;
-  color: hsl(0, 0%, 25%);
-}
-
-.searched-item__img {
-  width: 35px;
-  margin-right: 15px;
-}

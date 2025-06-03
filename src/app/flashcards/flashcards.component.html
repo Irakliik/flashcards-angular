@@ -4,7 +4,11 @@
   <h1 class="flashcards-main__h1">{{ selectedSet()!.title }}</h1>
 
   <div class="flashcards-stuff-container">
-    <app-board [(selectedCard)]="selectedCard" [(isTerm)]="isTerm"></app-board>
+    <app-board
+      [(selectedCard)]="selectedCard"
+      [(isTerm)]="isTerm"
+      [(hintShown)]="hintShown"
+    ></app-board>
 
     <div class="tools-below">
       <div class="arrows">

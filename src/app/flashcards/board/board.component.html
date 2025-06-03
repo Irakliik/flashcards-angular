@@ -1,9 +1,3 @@
-<!-- <div
-  class="board row"
-  [style.rotate]="'x ' + deg() + 'deg'"
-  (click)="turnCard()"
-> -->
-
 <div class="board row" [class.rotate]="rotate" (click)="turnCard()">
   <div
     class="board__tools row"
@@ -12,19 +6,19 @@
       hidden: hidden
     }"
   >
-    <button class="hint-btn row">
+    <button
+      class="hint-btn row"
+      (click)="onHint($event)"
+      [class.hint-btn--clicked]="hintShown()"
+    >
       <img src="bulb.png" class="hint-btn__icon" alt="hint icon" />
-      <span class="hint-text">Get a hint</span>
+      <span class="hint-text">{{ hintBtnName() }}</span>
     </button>
     <button class="edit-btn row" (click)="onEditCard($event)">
       <img src="edit.png" class="edit-btn__icon" alt="edit icon" />
     </button>
   </div>
   <div class="word-container">
-    <!-- <p [style.rotate]="'x ' + deg + 'deg'" class="termOrDefinition">
-      {{ isTerm() ? selectedCard().term : selectedCard().definition }}
-    </p> -->
-
     @if (front()) {
     <p class="front text" [class.front-visible]="frontVisible">
       {{ selectedCard().term }}

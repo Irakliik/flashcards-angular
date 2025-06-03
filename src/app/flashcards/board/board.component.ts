@@ -4,7 +4,9 @@ import {
   ElementRef,
   inject,
   model,
+  OnInit,
   signal,
+  viewChild,
   ViewChild,
 } from '@angular/core';
 import { Card } from '../../sets-model';
@@ -24,12 +26,25 @@ export class BoardComponent {
   selectedCard = model.required<Card>();
   isTerm = model.required<boolean>();
   front = signal(true);
-  // deg = signal(0);
   rotate = false;
   backVisible = false;
   frontVisible = true;
   toolsInvisible = false;
   hidden = false;
+
+  hintShown = model.required<boolean>();
+
+  hintBtnName = computed(() =>
+    this.hintShown()
+      ? this.selectedCard()
+          .definition.split(' ')
+          .reduce(
+            (txtCon, word) =>
+              txtCon + ' ' + word[0] + '-'.repeat(word.length - 1),
+            ''
+          )
+      : 'Get a Hint'
+  );
 
   turnCard() {
     // this.deg.set((this.deg() + 180) % 360);
@@ -61,5 +76,10 @@ export class BoardComponent {
     this.router.navigate(['./edit', this.selectedCard().id], {
       relativeTo: this.activatedRoute,
     });
+  }
+
+  onHint(e: Event) {
+    e.stopPropagation();
+    this.hintShown.update((val) => !val);
   }
 }

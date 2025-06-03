@@ -14,5 +14,4 @@ An interactive flashcards application built with **Angular** that helps users me
 ## 🛠️ Tech Stack
 
 - **Frontend Framework:** Angular
-- **Languages:** TypeScript, HTML, SCSS
-- 
+- **Languages:** TypeScript, HTML, CSS

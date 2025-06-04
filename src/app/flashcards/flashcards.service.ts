@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
-import { Card, type NewSet, type Sets } from '../sets-model';
+import { Card, NewCard, type NewSet, type Sets } from '../sets-model';
 import { Subject } from 'rxjs';
-import { Flashcards } from './flashcards';
+import { cards, Flashcards } from './flashcards';
 
 @Injectable({ providedIn: 'root' })
 export class FlashcardsService {
@@ -15,6 +15,8 @@ export class FlashcardsService {
 
   private sets = signal<Sets>(Flashcards);
 
+  private cards = signal<Card[]>(cards);
+
   allSets = this.sets.asReadonly();
 
   updateCard$ = new Subject<{
@@ -23,61 +25,78 @@ export class FlashcardsService {
     id: string;
   }>();
 
-  addSet(newSet: NewSet) {
-    this.sets.update((oldSet) => [
-      ...oldSet,
-      { ...newSet, setId: new Date().getTime().toString() },
-    ]);
-    this.saveSets();
+  addSet(newSet: NewSet) {}
+
+  addCards(newCards: NewCard[]) {}
+
+  addSetAndCards(newSet: NewSet, newCards: NewCard[]) {
+    const setId = new Date().getTime().toString();
+
+    this.sets.update((oldsets) => [...oldsets, { ...newSet, setId: setId }]);
+
+    const cards: Card[] = newCards.map((newCards) => ({
+      ...newCards,
+      setId: setId,
+    }));
+
+    this.cards.update((oldCards) => [...oldCards, ...cards]);
   }
 
-  deleteSet(id: string) {
-    this.sets.update((oldSets) => oldSets.filter((set) => set.setId !== id));
-    this.saveSets();
-  }
+  // addSet(newSet: NewSet) {
+  //   this.sets.update((oldSet) => [
+  //     ...oldSet,
+  //     { ...newSet, setId: new Date().getTime().toString() },
+  //   ]);
+  //   this.saveSets();
+  // }
 
-  getCard(setId: string, cardId: string) {
-    return this.allSets()
-      .find((set) => set.setId === setId)!
-      .cards.find((card) => card.id === cardId);
-  }
+  // deleteSet(id: string) {
+  //   this.sets.update((oldSets) => oldSets.filter((set) => set.setId !== id));
+  //   this.saveSets();
+  // }
 
-  replaceCard(updatedCard: Card, setId: string) {
-    this.sets.update((sets) =>
-      sets.map((oldSet) =>
-        oldSet.setId === setId
-          ? {
-              ...oldSet,
-              cards: oldSet.cards.map((card) =>
-                updatedCard.id === card.id ? updatedCard : card
-              ),
-            }
-          : oldSet
-      )
-    );
-    this.saveSets();
-  }
+  // getCard(setId: string, cardId: string) {
+  //   return this.allSets()
+  //     .find((set) => set.setId === setId)!
+  //     .cards.find((card) => card.id === cardId);
+  // }
 
-  private saveSets() {
-    localStorage.setItem('sets', JSON.stringify(this.sets()));
-  }
+  // replaceCard(updatedCard: Card, setId: string) {
+  //   this.sets.update((sets) =>
+  //     sets.map((oldSet) =>
+  //       oldSet.setId === setId
+  //         ? {
+  //             ...oldSet,
+  //             cards: oldSet.cards.map((card) =>
+  //               updatedCard.id === card.id ? updatedCard : card
+  //             ),
+  //           }
+  //         : oldSet
+  //     )
+  //   );
+  //   this.saveSets();
+  // }
 
-  swapCards(setId: string) {
-    this.sets.update((oldSets) =>
-      oldSets.map((oldSet) =>
-        oldSet.setId !== setId
-          ? oldSet
-          : {
-              ...oldSet,
-              cards: oldSet.cards.map((oldCard) => ({
-                ...oldCard,
-                term: oldCard.definition,
-                definition: oldCard.term,
-              })),
-            }
-      )
-    );
+  // private saveSets() {
+  //   localStorage.setItem('sets', JSON.stringify(this.sets()));
+  // }
 
-    this.saveSets();
-  }
+  // swapCards(setId: string) {
+  //   this.sets.update((oldSets) =>
+  //     oldSets.map((oldSet) =>
+  //       oldSet.setId !== setId
+  //         ? oldSet
+  //         : {
+  //             ...oldSet,
+  //             cards: oldSet.cards.map((oldCard) => ({
+  //               ...oldCard,
+  //               term: oldCard.definition,
+  //               definition: oldCard.term,
+  //             })),
+  //           }
+  //     )
+  //   );
+
+  //   this.saveSets();
+  // }
 }

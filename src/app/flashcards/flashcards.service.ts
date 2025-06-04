@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { Card, type NewSet, type Sets } from '../sets-model';
 import { Subject } from 'rxjs';
+import { Flashcards } from './flashcards';
 
 @Injectable({ providedIn: 'root' })
 export class FlashcardsService {
@@ -12,30 +13,7 @@ export class FlashcardsService {
     }
   }
 
-  private sets = signal<Sets>([
-    {
-      title: 'italian-english',
-      description: 'animals',
-      setId: 'm1',
-      cards: [
-        {
-          id: 'c1',
-          term: 'cane',
-          definition: 'dog',
-        },
-        {
-          id: 'c2',
-          term: 'gatto',
-          definition: 'cat',
-        },
-        {
-          id: 'c3',
-          term: 'pecora',
-          definition: 'sheep',
-        },
-      ],
-    },
-  ]);
+  private sets = signal<Sets>(Flashcards);
 
   allSets = this.sets.asReadonly();
 

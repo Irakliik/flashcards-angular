@@ -3,6 +3,7 @@ import {
   computed,
   ElementRef,
   inject,
+  input,
   model,
   OnInit,
   signal,
@@ -23,7 +24,7 @@ import { single } from 'rxjs';
 export class BoardComponent {
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
-  selectedCard = model.required<Card>();
+  selectedCard = input.required<Card>();
   isTerm = model.required<boolean>();
   front = signal(true);
   rotate = false;

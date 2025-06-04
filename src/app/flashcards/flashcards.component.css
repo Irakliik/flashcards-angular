@@ -9,8 +9,11 @@
   padding: 1.5rem;
 }
 
-.flashcards-main__h1 {
-  margin-bottom: 50px;
+.flashcards-main__title {
+}
+.flashcards-main__description {
+  margin-bottom: 40px;
+  color: #586380;
 }
 
 .flashcards-stuff-container {

@@ -1,15 +1,5 @@
 export type Sets = CardSet[];
 
-// export type NewSet = {
-//   title: string;
-//   description: string;
-//   cards: {
-//     term: string;
-//     definition: string;
-//     id: string;
-//   }[];
-// };
-
 export type NewSet = {
   title: string;
   description: string;

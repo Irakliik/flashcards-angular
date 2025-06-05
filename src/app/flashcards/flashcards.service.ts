@@ -26,11 +26,7 @@ export class FlashcardsService {
 
   allCards = this.cards.asReadonly();
 
-  updateCard$ = new Subject<{
-    term: string;
-    definition: string;
-    id: string;
-  }>();
+  updateCard$ = new Subject<NewCard>();
 
   addSetAndCards(newSet: NewSet, newCards: NewCard[]) {
     const setId = new Date().getTime().toString();

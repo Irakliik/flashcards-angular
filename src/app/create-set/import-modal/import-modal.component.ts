@@ -5,7 +5,7 @@ import {
   output,
   viewChild,
 } from '@angular/core';
-import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CreateSetService } from '../create-set.service';
 
@@ -22,16 +22,6 @@ export class ImportModalComponent {
   activatedRoute = inject(ActivatedRoute);
   form = viewChild.required<NgForm>('form');
   createSetService = inject(CreateSetService);
-
-  constructor() {
-    afterNextRender(() => {
-      setTimeout(() => {
-        this.form().controls['import'].setValue(
-          'lamazo fakizo\nzura zaza\ngaga gugu'
-        );
-      }, 1);
-    });
-  }
 
   onCancel() {
     this.router.navigate(['..'], { relativeTo: this.activatedRoute });

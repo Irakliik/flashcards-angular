@@ -10,7 +10,7 @@ import {
 import { ButtonComponent } from '../shared/button/button.component';
 import { FlashcardsService } from '../flashcards/flashcards.service';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
-import { Card } from '../sets-model';
+import { Card, NewCard } from '../sets-model';
 import { CreateSetService } from './create-set.service';
 
 @Component({
@@ -98,19 +98,21 @@ export class CreateSetComponent implements OnInit {
   }
 
   onSubmit() {
-    const cardsValue = this.form.get('creatingCards')!.value as Card[];
+    const cardsValue = this.form.get('creatingCards')!.value as NewCard[];
     const title = this.form.get('title')!.value as string;
     const description = this.form.get('description')!.value as string;
 
-    const cards = cardsValue.filter(
+    const newCards = cardsValue.filter(
       (creatingCard) => creatingCard.definition && creatingCard.term
     );
 
-    this.flashcardsService.addSet({
-      title: title,
-      description: description,
-      cards: cards,
-    });
+    this.flashcardsService.addSetAndCards(
+      {
+        title: title,
+        description: description,
+      },
+      newCards
+    );
     this.router.navigate(['']);
   }
 

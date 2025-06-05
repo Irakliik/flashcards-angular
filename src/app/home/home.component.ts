@@ -16,7 +16,7 @@ export class HomeComponent {
 
   sets = this.flashcardsService.allSets;
 
-  // onDelete(id: string) {
-  //   this.flashcardsService.deleteSet(id);
-  // }
+  onDelete(id: string) {
+    this.flashcardsService.deleteSet(id);
+  }
 }

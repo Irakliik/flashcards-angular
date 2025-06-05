@@ -48,7 +48,10 @@ export class FlashcardsComponent implements OnInit {
 
     this.flashcardsService.updateCard$.subscribe({
       next: (newCard) => {
-        // this.flashcardsService.replaceCard(newCard, this.selectedSet()!.setId);
+        this.flashcardsService.replaceCard({
+          ...newCard,
+          setId: this.selectedSet()!.setId,
+        });
       },
     });
   }

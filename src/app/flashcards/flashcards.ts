@@ -16,7 +16,7 @@ export const Flashcards: Sets = [
   {
     title: 'german english vocabulary',
     description: 'vegetables',
-    setId: 'v1',
+    setId: 'g1',
   },
 ];
 
@@ -64,32 +64,32 @@ export const cards: Card[] = [
     definition: 'orange',
   },
   {
-    id: 'e1',
-    setId: 'e1',
+    id: 'v1',
+    setId: 'g1',
     term: 'die Gurke',
     definition: 'cucumber',
   },
   {
-    id: 'e2',
-    setId: 'e1',
+    id: 'v2',
+    setId: 'g1',
     term: 'die Kartoffel',
     definition: 'potato',
   },
   {
-    id: 'e3',
-    setId: 'e1',
+    id: 'v3',
+    setId: 'g1',
     term: 'die Zwiebel',
     definition: 'onion',
   },
   {
-    id: 'e4',
-    setId: 'e1',
+    id: 'v4',
+    setId: 'g1',
     term: 'die Möhre',
     definition: 'carrot',
   },
   {
-    id: 'e5',
-    setId: 'e1',
+    id: 'v5',
+    setId: 'g1',
     term: 'der Spinat',
     definition: 'spinach',
   },

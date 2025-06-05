@@ -1,6 +1,6 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CardSet } from '../../../../sets-model';
+import { Card, CardSet } from '../../../../sets-model';
 import { FlashcardsService } from '../../../../flashcards/flashcards.service';
 
 @Component({
@@ -10,10 +10,14 @@ import { FlashcardsService } from '../../../../flashcards/flashcards.service';
   templateUrl: './search-suggestion.component.html',
   styleUrl: './search-suggestion.component.css',
 })
-export class SearchSuggestionComponent {
+export class SearchSuggestionComponent implements OnInit {
   flashcardsService = inject(FlashcardsService);
   set = input.required<CardSet>();
-  cards = this.flashcardsService.getCards(this.set().setId);
+  cards!: Card[];
+
+  ngOnInit(): void {
+    this.cards = this.flashcardsService.getCards(this.set().setId);
+  }
 
   onClick() {}
 }

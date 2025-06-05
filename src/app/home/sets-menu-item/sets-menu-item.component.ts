@@ -1,4 +1,4 @@
-import { Component, input, OnInit, output } from '@angular/core';
+import { Component, inject, input, OnInit, output } from '@angular/core';
 import { FlashcardsService } from '../../flashcards/flashcards.service';
 import { CardSet, Sets } from '../../sets-model';
 import { RouterLink } from '@angular/router';
@@ -13,7 +13,11 @@ import { RouterLink } from '@angular/router';
 export class SetsMenuItemComponent {
   delete = output<string>();
 
+  flashcardsService = inject(FlashcardsService);
+
   cardSet = input.required<CardSet>();
+
+  cards = this.flashcardsService.getCards(this.cardSet().setId);
 
   onDeleteBtn(e: Event) {
     e.preventDefault();

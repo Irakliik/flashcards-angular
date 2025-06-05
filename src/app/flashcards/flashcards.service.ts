@@ -7,9 +7,14 @@ import { cards, Flashcards } from './flashcards';
 export class FlashcardsService {
   constructor() {
     const sets = localStorage.getItem('sets');
+    const cards = localStorage.getItem('cards');
 
     if (sets) {
       this.sets.set(JSON.parse(sets));
+    }
+
+    if (cards) {
+      this.cards.set(JSON.parse(cards));
     }
   }
 
@@ -19,15 +24,13 @@ export class FlashcardsService {
 
   allSets = this.sets.asReadonly();
 
+  allCards = this.cards.asReadonly();
+
   updateCard$ = new Subject<{
     term: string;
     definition: string;
     id: string;
   }>();
-
-  addSet(newSet: NewSet) {}
-
-  addCards(newCards: NewCard[]) {}
 
   addSetAndCards(newSet: NewSet, newCards: NewCard[]) {
     const setId = new Date().getTime().toString();
@@ -40,6 +43,50 @@ export class FlashcardsService {
     }));
 
     this.cards.update((oldCards) => [...oldCards, ...cards]);
+  }
+
+  getCards(setId: string) {
+    return this.cards().filter((card) => card.setId === setId);
+  }
+
+  deleteSet(setId: string) {
+    this.sets.update((oldSets) => oldSets.filter((set) => set.setId !== setId));
+    this.cards.update((oldcards) =>
+      oldcards.filter((card) => card.setId !== setId)
+    );
+    this.saveSets();
+    this.saveCards();
+  }
+
+  getCard(cardId: string) {
+    return this.allCards().find((card) => card.id === cardId);
+  }
+
+  replaceCard(updatedCard: Card) {
+    this.cards.update((oldCards) =>
+      oldCards.map((card) => (card.id === updatedCard.id ? updatedCard : card))
+    );
+    this.saveCards();
+  }
+
+  swapCards(setId: string) {
+    this.cards.update((oldCards) =>
+      oldCards.map((card) =>
+        card.setId === setId
+          ? { ...card, term: card.definition, definition: card.term }
+          : card
+      )
+    );
+
+    this.saveCards();
+  }
+
+  private saveSets() {
+    localStorage.setItem('sets', JSON.stringify(this.sets()));
+  }
+
+  private saveCards() {
+    localStorage.setItem('cards', JSON.stringify(this.cards()));
   }
 
   // addSet(newSet: NewSet) {

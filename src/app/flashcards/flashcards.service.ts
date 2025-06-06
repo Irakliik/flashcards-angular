@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { Card, NewCard, type NewSet, type Sets } from '../sets-model';
+import { Card, CardSet, NewCard, type NewSet, type Sets } from '../sets-model';
 import { Subject } from 'rxjs';
 import { cards, Flashcards } from './flashcards';
 
@@ -28,7 +28,7 @@ export class FlashcardsService {
 
   updateCard$ = new Subject<NewCard>();
 
-  addSetAndCards(newSet: NewSet, newCards: NewCard[]) {
+  addSet(newSet: NewSet, newCards: NewCard[]) {
     const setId = new Date().getTime().toString();
 
     this.sets.update((oldsets) => [...oldsets, { ...newSet, setId: setId }]);
@@ -39,6 +39,24 @@ export class FlashcardsService {
     }));
 
     this.cards.update((oldCards) => [...oldCards, ...cards]);
+  }
+
+  editSet(editedSet: CardSet, editedCards: Card[]) {
+    this.sets.update((oldSets) =>
+      oldSets.map((set) => (set.setId === editedSet.setId ? editedSet : set))
+    );
+    this.cards.update((oldCards) =>
+      oldCards.filter((card) => card.setId !== editedSet.setId)
+    );
+
+    this.cards.update((oldCards) => [...oldCards, ...editedCards]);
+
+    this.saveSets();
+    this.saveCards();
+  }
+
+  getSet(setId: string) {
+    return this.sets().find((set) => set.setId === setId);
   }
 
   getCards(setId: string) {

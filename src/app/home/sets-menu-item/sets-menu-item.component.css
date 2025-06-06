@@ -30,7 +30,14 @@
   top: 10px;
 }
 
-.delete-button {
+.edit-button {
+  position: absolute;
+  right: 45px;
+  top: 10px;
+}
+
+.delete-button,
+.edit-button {
   background: none;
   border: none;
   cursor: pointer;
@@ -47,6 +54,12 @@
   height: auto;
 }
 
-.delete-button:hover {
+.edit-button img {
+  width: 18px;
+  height: auto;
+}
+
+.delete-button:hover,
+.edit-button:hover {
   background-color: #d9dde8;
 }

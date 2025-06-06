@@ -1,7 +1,7 @@
 import { Component, inject, input, OnInit, output } from '@angular/core';
 import { FlashcardsService } from '../../flashcards/flashcards.service';
 import { Card, CardSet, Sets } from '../../sets-model';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-sets-menu-item',
@@ -12,6 +12,8 @@ import { RouterLink } from '@angular/router';
 })
 export class SetsMenuItemComponent implements OnInit {
   delete = output<string>();
+  router = inject(Router);
+  activatedRoute = inject(ActivatedRoute);
 
   flashcardsService = inject(FlashcardsService);
 
@@ -23,7 +25,18 @@ export class SetsMenuItemComponent implements OnInit {
     this.cards = this.flashcardsService.getCards(this.cardSet().setId);
   }
   onDeleteBtn(e: Event) {
+    e.stopPropagation();
     e.preventDefault();
     this.delete.emit(this.cardSet().setId);
+  }
+
+  onEditBtn(e: Event) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.router.navigate(['create-set'], {
+      queryParams: {
+        edit: this.cardSet().setId,
+      },
+    });
   }
 }

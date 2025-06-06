@@ -84,7 +84,9 @@
     </div>
 
     <div class="create-set">
-      <button type="submit" class="tool-btn create-set__btn">Create</button>
+      <button type="submit" class="tool-btn create-set__btn">
+        {{ isEditing() ? "Save" : "Create" }}
+      </button>
     </div>
   </form>
 </main>

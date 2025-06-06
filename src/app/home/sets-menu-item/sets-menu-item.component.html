@@ -9,8 +9,15 @@
     </figure>
     <div>
       <h4 class="sets-menu__item__h4">{{ cardSet().title }}</h4>
-      <p>Flashcard set - {{ cardSet().cards.length }} terms</p>
+      <p>Flashcard set - {{ cards.length }} terms</p>
     </div>
+    <button
+      type="button"
+      class="edit-button sets-menu__item__edit-btn"
+      (click)="onEditBtn($event)"
+    >
+      <img src="/edit.png" alt="delete-icon" />
+    </button>
     <button
       type="button"
       class="delete-button sets-menu__item__del-btn"

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, input, OnInit } from '@angular/core';
 import { CreatingCardComponent } from './creating-card/creating-card.component';
 import {
   FormArray,
@@ -10,7 +10,7 @@ import {
 import { ButtonComponent } from '../shared/button/button.component';
 import { FlashcardsService } from '../flashcards/flashcards.service';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
-import { Card } from '../sets-model';
+import { Card, CardSet, NewCard } from '../sets-model';
 import { CreateSetService } from './create-set.service';
 
 @Component({
@@ -30,8 +30,38 @@ export class CreateSetComponent implements OnInit {
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
   createSetService = inject(CreateSetService);
-
+  // For Editing [
+  edit = input<string>();
+  isEditing = computed(() => (this.edit() ? true : false));
+  selectedSet?: CardSet;
+  cards?: Card[];
+  // ]
   ngOnInit(): void {
+    // For Editing [
+    if (this.isEditing()) {
+      this.selectedSet = this.flashcardsService.getSet(this.edit()!);
+      this.cards = this.flashcardsService.getCards(this.edit()!);
+
+      this.form.patchValue({
+        title: this.selectedSet!.title,
+        description: this.selectedSet!.description,
+      });
+
+      for (let i = 0; i < this.cards.length - 3; i++) {
+        this.addCardGroup();
+      }
+
+      this.form.controls.creatingCards.controls.forEach((control, i) =>
+        control.patchValue({
+          term: this.cards![i].term,
+          definition: this.cards![i].definition,
+          id: this.cards![i].id,
+        })
+      );
+    }
+
+    //  ]
+
     this.createSetService.extractedCards$.subscribe((extractedCards) => {
       for (let i = 0; i < extractedCards.length - 3; i++) {
         this.addCardGroup();
@@ -56,17 +86,17 @@ export class CreateSetComponent implements OnInit {
       new FormGroup({
         term: new FormControl(''),
         definition: new FormControl(''),
-        id: new FormControl('c1'),
+        id: new FormControl(crypto.randomUUID().toString()),
       }),
       new FormGroup({
         term: new FormControl(''),
         definition: new FormControl(''),
-        id: new FormControl('c2'),
+        id: new FormControl(crypto.randomUUID().toString()),
       }),
       new FormGroup({
         term: new FormControl(''),
         definition: new FormControl(''),
-        id: new FormControl('c3'),
+        id: new FormControl(crypto.randomUUID().toString()),
       }),
     ]),
   });
@@ -92,25 +122,45 @@ export class CreateSetComponent implements OnInit {
       new FormGroup({
         term: new FormControl(''),
         definition: new FormControl(''),
-        id: new FormControl(new Date().getTime().toString()),
+        id: new FormControl(crypto.randomUUID().toString()),
       })
     );
   }
 
   onSubmit() {
-    const cardsValue = this.form.get('creatingCards')!.value as Card[];
+    const cardsValue = this.form.get('creatingCards')!.value as NewCard[];
     const title = this.form.get('title')!.value as string;
     const description = this.form.get('description')!.value as string;
 
-    const cards = cardsValue.filter(
+    const newCards = cardsValue.filter(
       (creatingCard) => creatingCard.definition && creatingCard.term
     );
 
-    this.flashcardsService.addSet({
-      title: title,
-      description: description,
-      cards: cards,
-    });
+    if (this.isEditing()) {
+      const setId = this.selectedSet!.setId;
+
+      const editedCards = cardsValue.map((card) => ({ ...card, setId }));
+
+      this.flashcardsService.editSet(
+        {
+          title,
+          description,
+          setId,
+        },
+        editedCards
+      );
+
+      this.router.navigate(['']);
+      return;
+    }
+
+    this.flashcardsService.addSet(
+      {
+        title: title,
+        description: description,
+      },
+      newCards
+    );
     this.router.navigate(['']);
   }
 

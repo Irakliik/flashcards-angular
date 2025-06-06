@@ -29,22 +29,29 @@ export class FlashcardsComponent implements OnInit {
   selectedSet = computed(() =>
     this.flashcardsService.allSets().find((set) => set.setId === this.setId())
   );
+
+  selectedCards = computed(() =>
+    this.flashcardsService
+      .allCards()
+      .filter((set) => set.setId === this.setId())
+  );
   totalCardsNum!: number;
   selectedCardNum = signal(0);
 
-  selectedCard = computed(
-    () => this.selectedSet()!.cards[this.selectedCardNum()]
-  );
+  selectedCard = computed(() => this.selectedCards()[this.selectedCardNum()]);
 
   isTerm = true;
   hintShown = false;
 
   ngOnInit(): void {
-    this.totalCardsNum = this.selectedSet()!.cards.length;
+    this.totalCardsNum = this.selectedCards().length;
 
     this.flashcardsService.updateCard$.subscribe({
       next: (newCard) => {
-        this.flashcardsService.replaceCard(newCard, this.selectedSet()!.setId);
+        this.flashcardsService.replaceCard({
+          ...newCard,
+          setId: this.selectedSet()!.setId,
+        });
       },
     });
   }

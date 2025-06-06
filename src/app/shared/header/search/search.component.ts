@@ -9,6 +9,7 @@ import {
 import { FlashcardsService } from '../../../flashcards/flashcards.service';
 import { CardSet } from '../../../sets-model';
 import { RouterLink } from '@angular/router';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-search',

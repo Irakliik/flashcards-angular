@@ -2,6 +2,7 @@ import {
   afterNextRender,
   Component,
   inject,
+  OnInit,
   output,
   viewChild,
 } from '@angular/core';
@@ -24,7 +25,20 @@ export class ImportModalComponent {
   createSetService = inject(CreateSetService);
 
   onCancel() {
-    this.router.navigate(['..'], { relativeTo: this.activatedRoute });
+    this.router.navigate(['..'], {
+      relativeTo: this.activatedRoute,
+      queryParamsHandling: 'preserve',
+    });
+  }
+
+  constructor() {
+    afterNextRender(() => {
+      setTimeout(() => {
+        this.form().setValue({
+          import: `Hello Kitty\nDonald Trump\nElon Musk`,
+        });
+      }, 1);
+    });
   }
 
   onSubmit(form: NgForm) {

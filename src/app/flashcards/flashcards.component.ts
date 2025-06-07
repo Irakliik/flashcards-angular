@@ -1,19 +1,14 @@
 import {
   Component,
   computed,
-  effect,
   inject,
   input,
   OnInit,
   signal,
 } from '@angular/core';
 import { FlashcardsService } from './flashcards.service';
-import { Card, CardSet } from '../sets-model';
-import { ActivatedRoute, RouterOutlet } from '@angular/router';
-import { ButtonComponent } from '../shared/button/button.component';
+import { RouterOutlet } from '@angular/router';
 import { BoardComponent } from './board/board.component';
-import { toObservable } from '@angular/core/rxjs-interop';
-import { EditCardComponent } from './board/edit-card/edit-card.component';
 
 @Component({
   selector: 'app-flashcards',

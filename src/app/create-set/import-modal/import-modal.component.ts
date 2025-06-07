@@ -2,6 +2,7 @@ import {
   afterNextRender,
   Component,
   inject,
+  OnInit,
   output,
   viewChild,
 } from '@angular/core';
@@ -24,7 +25,10 @@ export class ImportModalComponent {
   createSetService = inject(CreateSetService);
 
   onCancel() {
-    this.router.navigate(['..'], { relativeTo: this.activatedRoute });
+    this.router.navigate(['..'], {
+      relativeTo: this.activatedRoute,
+      queryParamsHandling: 'preserve',
+    });
   }
 
   onSubmit(form: NgForm) {

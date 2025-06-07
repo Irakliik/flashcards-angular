@@ -63,16 +63,39 @@ export class CreateSetComponent implements OnInit {
     //  ]
 
     this.createSetService.extractedCards$.subscribe((extractedCards) => {
-      for (let i = 0; i < extractedCards.length - 3; i++) {
+      const cardsArray = this.form.get('creatingCards')!.value;
+
+      // The index of a control after which all the controls are empty
+      const specialElementIndex = cardsArray.findIndex((_, i, cards) =>
+        cards.slice(i).every((card) => !(card.term || card.definition))
+      );
+
+      const freeCards = cardsArray.length - specialElementIndex;
+
+      const cardsToAddNum =
+        specialElementIndex > -1
+          ? extractedCards.length - freeCards
+          : extractedCards.length;
+
+      const indexToPrepopulateFrom =
+        specialElementIndex > -1 ? specialElementIndex : cardsArray.length;
+
+      for (let i = 0; i < cardsToAddNum; i++) {
         this.addCardGroup();
       }
 
-      this.form.controls.creatingCards.controls.forEach((formGroup, index) => {
-        formGroup.patchValue({
-          term: extractedCards[index].term,
-          definition: extractedCards[index].definition,
-        });
+      let indexToPopulate = indexToPrepopulateFrom;
+
+      extractedCards.forEach((card) => {
+        this.form.controls.creatingCards.controls[indexToPopulate++].patchValue(
+          {
+            term: card.term,
+            definition: card.definition,
+          }
+        );
       });
+
+      //
     });
   }
 
@@ -139,7 +162,7 @@ export class CreateSetComponent implements OnInit {
     if (this.isEditing()) {
       const setId = this.selectedSet!.setId;
 
-      const editedCards = cardsValue.map((card) => ({ ...card, setId }));
+      const editedCards = newCards.map((card) => ({ ...card, setId }));
 
       this.flashcardsService.editSet(
         {
@@ -177,6 +200,9 @@ export class CreateSetComponent implements OnInit {
   }
 
   onImport() {
-    this.router.navigate(['import'], { relativeTo: this.activatedRoute });
+    this.router.navigate(['import'], {
+      relativeTo: this.activatedRoute,
+      queryParamsHandling: 'preserve',
+    });
   }
 }

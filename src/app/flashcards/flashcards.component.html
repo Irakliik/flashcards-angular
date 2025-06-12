@@ -22,7 +22,7 @@
         </button>
         <span class="flashcard-number"> {{ selectedCardNum() + 1 }} </span>
         /
-        <span class="flashcard-number-from">{{ totalCardsNum }}</span>
+        <span class="flashcard-number-from">{{ totalCardsNum() }}</span>
         <button class="right-arrow-btn" (click)="onNextCard()">
           <img
             src="right-arrow.png"
@@ -43,13 +43,25 @@
           alt="swap button icon"
         />
       </button>
+      <button
+        (click)="onShuffle()"
+        class="flashcards-shuffle-btn row"
+        appButton
+        type="button"
+      >
+        <img
+          src="shuffle.png"
+          alt="swap button icon"
+          class="flashcards-shuffle-btn__icon"
+        />
+      </button>
     </div>
 
     <div class="flashcards-progress-container">
       <progress
         #progress
         class="flashcards-progress"
-        [max]="totalCardsNum"
+        [max]="totalCardsNum()"
         [value]="selectedCardNum() + 1"
       ></progress>
     </div>

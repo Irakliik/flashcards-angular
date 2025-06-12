@@ -82,7 +82,8 @@
   width: 100%;
 }
 
-.flashcards-swap-btn {
+.flashcards-swap-btn,
+.flashcards-shuffle-btn {
   padding: 0.5rem;
   border-radius: 10px;
   border: 2px solid hsl(224, 25%, 88%);
@@ -98,12 +99,18 @@
   right: 0;
 }
 
-.flashcards-swap-btn__icon {
+.flashcards-shuffle-btn {
+  right: 50px;
+}
+
+.flashcards-swap-btn__icon,
+.flashcards-shuffle-btn__icon {
   width: 18px;
   display: block;
 }
 
-.flashcards-swap-btn:hover {
+.flashcards-swap-btn:hover,
+.flashcards-shuffle-btn:hover {
   background-color: hsla(0, 0%, 50%, 0.093);
 }
 

@@ -72,4 +72,8 @@ export class FlashcardsComponent implements OnInit {
     this.isTerm = true;
     this.hintShown = false;
   }
+
+  onShuffle() {
+    this.flashcardsService.shuffleCards(this.setId());
+  }
 }

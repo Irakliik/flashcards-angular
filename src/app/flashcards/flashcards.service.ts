@@ -65,11 +65,15 @@ export class FlashcardsService {
 
   deleteSet(setId: string) {
     this.sets.update((oldSets) => oldSets.filter((set) => set.setId !== setId));
+    this.deleteCards(setId);
+    this.saveSets();
+    this.saveCards();
+  }
+
+  deleteCards(setId: string) {
     this.cards.update((oldcards) =>
       oldcards.filter((card) => card.setId !== setId)
     );
-    this.saveSets();
-    this.saveCards();
   }
 
   getCard(cardId: string) {
@@ -101,5 +105,33 @@ export class FlashcardsService {
 
   private saveCards() {
     localStorage.setItem('cards', JSON.stringify(this.cards()));
+  }
+
+  shuffle(cards: Card[]) {
+    for (let i = cards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [cards[i], cards[j]] = [cards[j], cards[i]];
+    }
+    return cards;
+  }
+
+  shuffleCards(setId: string) {
+    const indices = this.cards().reduce<number[]>((acc, val, i) => {
+      return val.setId === setId ? [...acc, i] : acc;
+    }, []);
+
+    const setCards = this.cards().filter((card, i) => card.setId === setId);
+
+    const shuffledSetCards = this.shuffle([...setCards]);
+
+    const cards = [...this.cards()];
+
+    indices.forEach((val, i) => {
+      cards[val] = shuffledSetCards[i];
+    });
+
+    this.cards.set(cards);
+
+    this.saveCards();
   }
 }

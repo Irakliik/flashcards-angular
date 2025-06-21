@@ -1,7 +1,6 @@
 import {
   Component,
   computed,
-  effect,
   inject,
   input,
   OnInit,
@@ -10,7 +9,6 @@ import {
 import { FlashcardsService } from './flashcards.service';
 import { RouterOutlet } from '@angular/router';
 import { BoardComponent } from './board/board.component';
-import { Card } from '../sets-model';
 
 @Component({
   selector: 'app-flashcards',
@@ -27,16 +25,12 @@ export class FlashcardsComponent implements OnInit {
     this.flashcardsService.allSets().find((set) => set.setId === this.setId())
   );
 
-  selectedCards = signal<Card[]>([
-    {
-      id: '',
-      term: '',
-      definition: '',
-      setId: '',
-    },
-  ]);
-
-  totalCardsNum = computed(() => this.selectedCards().length);
+  selectedCards = computed(() =>
+    this.flashcardsService
+      .allCards()
+      .filter((set) => set.setId === this.setId())
+  );
+  totalCardsNum!: number;
   selectedCardNum = signal(0);
 
   selectedCard = computed(() => this.selectedCards()[this.selectedCardNum()]);
@@ -44,18 +38,8 @@ export class FlashcardsComponent implements OnInit {
   isTerm = true;
   hintShown = false;
 
-  constructor() {
-    effect(() => {
-      console.log(this.selectedCard());
-    });
-  }
-
   ngOnInit(): void {
-    this.selectedCards.set(
-      this.flashcardsService
-        .allCards()
-        .filter((set) => set.setId === this.setId())
-    );
+    this.totalCardsNum = this.selectedCards().length;
 
     this.flashcardsService.updateCard$.subscribe({
       next: (newCard) => {
@@ -76,7 +60,7 @@ export class FlashcardsComponent implements OnInit {
   }
 
   onNextCard() {
-    if (this.selectedCardNum() < this.totalCardsNum() - 1) {
+    if (this.selectedCardNum() < this.totalCardsNum - 1) {
       this.selectedCardNum.update((val) => ++val);
       this.isTerm = true;
       this.hintShown = false;
@@ -90,8 +74,6 @@ export class FlashcardsComponent implements OnInit {
   }
 
   onShuffle() {
-    this.selectedCards.update((oldCards) => [
-      ...this.flashcardsService.shuffleCards(oldCards),
-    ]);
+    this.flashcardsService.shuffleCards(this.setId());
   }
 }

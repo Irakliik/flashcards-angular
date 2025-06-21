@@ -12,7 +12,7 @@ An interactive flashcards application built with Angular that helps users memori
 - ❌ Delete flashcards  
 - 🔄 Flip flashcards to view either the term or the definition  
 - 🔀 Shuffle flashcards for random practice  
-- 💾 (Optional) Data persistence using `localStorage`
+- 💾 Data persistence using `localStorage`
 
 ---
 

@@ -1,22 +1,27 @@
-## 📚 Angular Flashcards App
+## 📚 Angular Flashcards App  
 
-An interactive flashcards application built with Angular that helps users memorize terms and definitions. Perfect for language learners, students, and anyone who needs help memorizing things.
-
----
-
-## 🚀 Features
-
-- ➕ Add new flashcards  
-- ✏️ Edit existing flashcards  
-- 📝 Edit the currently displayed flashcard  
-- ❌ Delete flashcards  
-- 🔄 Flip flashcards to view either the term or the definition  
-- 🔀 Shuffle flashcards for random practice  
-- 💾 Data persistence using `localStorage`
+An **interactive flashcards application** built with **Angular** that helps users memorize terms and definitions.  
+Ideal for **language learners, students, and anyone looking to boost their memory**.  
 
 ---
 
-## 🛠️ Tech Stack
+## 🚀 Features  
 
-- **Frontend Framework:** Angular  
-- **Languages:** TypeScript, HTML, CSS
+- ➕ Create new flashcards  
+- ✏️ Update existing flashcards  
+- 📝 Edit the currently displayed flashcard directly  
+- ❌ Remove flashcards  
+- 🔄 Flip cards to switch between term and definition  
+- 🔀 Shuffle mode for randomized practice  
+- 💾 Persistent storage with `localStorage`  
+
+---
+
+## 🛠️ Tech Stack  
+
+- **Framework:** Angular  
+- **Languages:** TypeScript, HTML, CSS  
+
+---
+
+🔗 **Live Demo:** [Flashcards App](https://irakliik.github.io/flashcards-angular/)  
